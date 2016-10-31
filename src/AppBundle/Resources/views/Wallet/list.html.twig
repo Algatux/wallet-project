@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:Wallet:list{% endblock %}
+
+{% block body %}
+<h1>Welcome to the Wallet:list page</h1>
+
+    <div>
+        <a href="{{ url('app_wallet_create') }}">Create a new wallet</a>
+    </div>
+
+    <div>
+        <ul>
+            {% for wallet in wallets %}
+                <li>
+                    <a href="{{ url('app_wallet_detail', {wallet: wallet.id}) }}">
+                        {{ wallet.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}

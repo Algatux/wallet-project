@@ -1,0 +1,7 @@
+services:
+
+  app.service_wallet.wallet_persister:
+    class: AppBundle\Service\Wallet\WalletPersister
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@event_dispatcher'
