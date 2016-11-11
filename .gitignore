@@ -1,6 +1,9 @@
 /app/config/parameters.yml
 /app/config/parameters_prod.yml
 /app/config/vendors/sentry.yml
+/bin/
+!/bin/console
+!/bin/deployer
 /build/
 /phpunit.xml
 /var/*
@@ -18,4 +21,3 @@
 /web/bundles/
 /web/css/
 /web/js/
-/bin/deployer
