@@ -47,19 +47,19 @@ class TransactionType extends AbstractType
                     ]
                 ]
             )
-            ->add(
-                'transactedBy',
-                EntityType::class,
-                [
-                    "class" => User::class,
-                    "query_builder" => function(UserRepository $userRepository){
-
-                        return $userRepository->getUserListQueryBuilder();
-                    },
-                    "choice_label" => "nickName",
-                    "label" => "Transacted by"
-                ]
-            )
+//            ->add(
+//                'transactedBy',
+//                EntityType::class,
+//                [
+//                    "class" => User::class,
+//                    "query_builder" => function(UserRepository $userRepository){
+//
+//                        return $userRepository->getUserListQueryBuilder();
+//                    },
+//                    "choice_label" => "nickName",
+//                    "label" => "Transacted by"
+//                ]
+//            )
             ->add(
                 'submit',
                 SubmitType::class,

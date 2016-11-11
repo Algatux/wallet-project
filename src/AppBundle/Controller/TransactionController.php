@@ -36,6 +36,7 @@ class TransactionController extends BaseController
 
             /** @var Transaction $transaction */
             $transaction = $form->getData();
+            $transaction->setTransactedBy($this->getUser());
 
             $this->getEm()->beginTransaction();
             try{
