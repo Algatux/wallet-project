@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Transaction
@@ -12,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Transaction
 {
+    const TYPE_IN = 1;
+    const TYPE_OUT = 2;
+
+    public static $readableType = [
+        self::TYPE_IN   => 'IN',
+        self::TYPE_OUT  => 'OUT',
+    ];
+
     /**
      * @var int
      *
@@ -25,23 +34,38 @@ class Transaction
      * @var string
      *
      * @ORM\Column(name="motivation", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $motivation;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="amount", type="decimal", precision=10, scale=2)
+     * @ORM\Column(name="amount", type="decimal", precision=10, scale=2, options={"default":0.0})
+     * @Assert\GreaterThanOrEqual(0.0)
      */
     private $amount;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="type", type="smallint")
+     * @ORM\Column(name="type", type="smallint", options={"default"=1})
      */
     private $type;
-
+    /**
+     * @var Wallet
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Wallet", inversedBy="transactions")
+     * @ORM\JoinColumn(name="wallet_id", referencedColumnName="id", nullable=false)
+     */
+    private $wallet;
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="transacted_by_user_id", referencedColumnName="id", nullable=false)
+     */
+    private $transactedBy;
 
     /**
      * Get id
@@ -123,6 +147,46 @@ class Transaction
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReadableType(): string
+    {
+        return self::$readableType[$this->type];
+    }
+
+    /**
+     * @return Wallet|null
+     */
+    public function getWallet()
+    {
+        return $this->wallet;
+    }
+
+    /**
+     * @param Wallet $wallet
+     */
+    public function setWallet(Wallet $wallet)
+    {
+        $this->wallet = $wallet;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getTransactedBy()
+    {
+        return $this->transactedBy;
+    }
+
+    /**
+     * @param User $transactedBy
+     */
+    public function setTransactedBy(User $transactedBy)
+    {
+        $this->transactedBy = $transactedBy;
     }
 }
 

@@ -4,5 +4,97 @@
 
 {% block body %}
     <h1>Wallet: {{ wallet.name }}</h1>
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-8">
+                    <a class="btn btn-default" href="{{ url('app_wallet_edit', {wallet: wallet.id}) }}">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a class="btn btn-danger" href="{{ url('app_wallet_delete', {wallet: wallet.id}) }}">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-default" href="{{ url('app_transaction_add', {wallet: wallet.id}) }}">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-body">
+
+            <h4>Transactions list</h4>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Motivation</th>
+                        <th>Type</th>
+                        <th>By</th>
+                        <th>Amount</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for transaction in wallet.transactions %}
+                    <tr class="{{ transaction.type == 1 ? 'success' : 'danger' }}">
+                        <td>{{ transaction.id }}</td>
+                        <td>{{ transaction.motivation }}</td>
+                        <td>{{ transaction.readableType }}</td>
+                        <td>{{ transaction.transactedBy.nickName }}</td>
+                        <td>{{ transaction.amount | number_format(2) }} €</td>
+                        <td>
+                            <a class="btn btn-danger" href="{{ url('app_transaction_remove', {transaction: transaction.id}) }}">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No available transactions</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="4">Total transfered</td>
+                    <td>{{ totalTransactioned | number_format(2) }} €</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h4>Single user amounts</h4>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in singleTransactionerAmounts if user.name %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.type | transaction_type | default('---') }}</td>
+                        <td>{{ user.amount }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No available data</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
 {% endblock %}
 

@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace Tests\AppBundle;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AppTestCase extends WebTestCase

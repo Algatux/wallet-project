@@ -28,4 +28,61 @@ class WalletPersisterTest extends AppTestCase
 
         self::assertNotEmpty($persistedWallet);
     }
+
+    public function test_update()
+    {
+        $wallet = new Wallet();
+        $wallet->setName('test_wallet');
+
+        $this->getEm()->persist($wallet);
+        $this->getEm()->flush($wallet);
+
+        $preexistantWallet = $this->getEm()->getRepository(Wallet::class)->findBy([
+            "name" => "test_wallet",
+            "description" => null
+        ]);
+
+        self::assertNotEmpty($preexistantWallet);
+
+        $wallet->setDescription('ciao ciao ciao');
+
+        $this->getContainer()->get('app.service_wallet.wallet_persister')->update($wallet);
+
+        $updatedWallet = $this->getEm()->getRepository(Wallet::class)->findBy([
+            "name" => "test_wallet",
+            "description" => 'ciao ciao ciao'
+        ]);
+        $preexistantWallet = $this->getEm()->getRepository(Wallet::class)->findBy([
+            "name" => "test_wallet",
+            "description" => null
+        ]);
+
+        self::assertNotEmpty($updatedWallet);
+        self::assertEmpty($preexistantWallet);
+    }
+
+    public function test_delete()
+    {
+        $wallet = new Wallet();
+        $wallet->setName('test_wallet');
+
+        $this->getEm()->persist($wallet);
+        $this->getEm()->flush($wallet);
+
+        $preexistantWallet = $this->getEm()->getRepository(Wallet::class)->findBy([
+            "name" => "test_wallet",
+            "description" => null
+        ]);
+
+        self::assertNotEmpty($preexistantWallet);
+
+        $this->getContainer()->get('app.service_wallet.wallet_persister')->delete($wallet);
+
+        $preexistantWallet = $this->getEm()->getRepository(Wallet::class)->findBy([
+            "name" => "test_wallet",
+            "description" => null
+        ]);
+
+        self::assertEmpty($preexistantWallet);
+    }
 }

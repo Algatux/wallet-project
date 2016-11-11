@@ -28,12 +28,19 @@
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "braincrafted/bootstrap-bundle": "^2.2",
+        "symfony/assetic-bundle": "^2.8",
+        "twbs/bootstrap": "^3.0",
+        "jquery/jquery":  "^1.11",
+        "bmatzner/fontawesome-bundle": "^4.6",
+        "sentry/sentry-symfony": "^0.6.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
-        "phpunit/phpunit": "^5.6"
+        "phpunit/phpunit": "^5.6",
+        "liip/functional-test-bundle": "^1.6"
     },
     "scripts": {
         "symfony-scripts": [
@@ -65,5 +72,18 @@
     },
     "config": {
         "bin-dir": "bin"
-    }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "jquery/jquery",
+                "version": "1.11.1",
+                "dist": {
+                    "url": "https://code.jquery.com/jquery-1.11.1.js",
+                    "type": "file"
+                }
+            }
+        }
+    ]
 }

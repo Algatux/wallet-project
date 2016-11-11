@@ -36,13 +36,30 @@ class WalletPersister
      */
     public function persist(Wallet $wallet)
     {
-        if ($this->entityManager->contains($wallet)) {
-            throw new \LogicException('Can\'t persist an already persisted wallet');
-        }
-
         $this->entityManager->persist($wallet);
         $this->entityManager->flush([$wallet]);
 
         $this->eventDispatcher->dispatch(WalletEvent::EVENT_CREATED, new WalletEvent($wallet));
+    }
+
+    /**
+     * @param Wallet $wallet
+     */
+    public function update(Wallet $wallet)
+    {
+        $this->entityManager->flush([$wallet]);
+
+        $this->eventDispatcher->dispatch(WalletEvent::EVENT_UPDATED, new WalletEvent($wallet));
+    }
+
+    /**
+     * @param Wallet $wallet
+     */
+    public function delete(Wallet $wallet)
+    {
+        $this->entityManager->remove($wallet);
+        $this->entityManager->flush([$wallet]);
+
+        $this->eventDispatcher->dispatch(WalletEvent::EVENT_DELETED, new WalletEvent($wallet));
     }
 }

@@ -13,9 +13,10 @@ use Symfony\Component\EventDispatcher\Event;
 class WalletEvent extends Event
 {
     const EVENT_CREATED = 'event.wallet.created';
-    /**
-     * @var Wallet
-     */
+    const EVENT_UPDATED = 'event.wallet.updated';
+    const EVENT_DELETED = 'event.wallet.deleted';
+
+    /** @var Wallet */
     private $wallet;
 
     /**

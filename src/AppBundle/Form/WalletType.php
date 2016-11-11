@@ -22,7 +22,20 @@ class WalletType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    "label" => "Name"
+                ]
+            )
+            ->add(
+                'description',
+                TextType::class,
+                [
+                    "label" => "Description"
+                ]
+            )
             ->add('submit', SubmitType::class);
     }
     

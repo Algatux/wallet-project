@@ -38,6 +38,12 @@ class WalletController extends BaseController
     {
         return [
             "wallet" => $wallet,
+            "totalTransactioned" => $this->getEm()
+                ->getRepository(Wallet::class)
+                ->getTotalAmountTrasferedByWallet($wallet),
+            "singleTransactionerAmounts" => $this->getEm()
+                ->getRepository(Wallet::class)
+                ->getSingleTransactionerAmountByWallet($wallet),
         ];
     }
 
@@ -85,23 +91,73 @@ class WalletController extends BaseController
     }
 
     /**
-     * @Route("/edit", name="app_wallet_edit")
+     * @Route("/{wallet}/edit", name="app_wallet_edit")
+     * @Template()
+     *
+     * @param Request $request
+     * @param Wallet  $wallet
+     *
+     * @return array|RedirectResponse
+     * @throws \Exception
      */
-    public function editAction()
+    public function editAction(Request $request, Wallet $wallet)
     {
-        return $this->render('AppBundle:Wallet:edit.html.twig', array(
-            // ...
-        ));
+        $form = $this->createForm(WalletType::class, $wallet);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            /** @var Wallet $wallet */
+            $wallet = $form->getData();
+
+            $this->getEm()->beginTransaction();
+            try{
+                $this->get('app.service_wallet.wallet_persister')->update($wallet);
+                $this->flashNotification(sprintf('Wallet %s successfully modified', $wallet->getName()));
+
+                $this->getEm()->commit();
+            }catch (\Exception $e) {
+                $this->flashError(sprintf('Failed wallet edit: %s', $e->getMessage()));
+
+                $this->getEm()->rollback();
+                $this->getEm()->close();
+
+                throw $e;
+            }
+
+            return $this->redirectToRoute('app_wallet_list');
+        }
+
+        return [
+            "form" => $form->createView()
+        ];
     }
 
     /**
-     * @Route("/delete", name="app_wallet_delete")
+     * @Route("/{wallet}/delete", name="app_wallet_delete")
+     * @param Wallet $wallet
+     *
+     * @return RedirectResponse
+     * @throws \Exception
      */
-    public function deleteAction()
+    public function deleteAction(Wallet $wallet)
     {
-        return $this->render('AppBundle:Wallet:delete.html.twig', array(
-            // ...
-        ));
+        $this->getEm()->beginTransaction();
+        try{
+            $this->get('app.service_wallet.wallet_persister')->delete($wallet);
+            $this->flashNotification(sprintf('Wallet %s successfully deleted', $wallet->getName()));
+
+            $this->getEm()->commit();
+        }catch (\Exception $e) {
+            $this->flashError(sprintf('Failed wallet deletion: %s', $e->getMessage()));
+
+            $this->getEm()->rollback();
+            $this->getEm()->close();
+
+            throw $e;
+        }
+
+        return $this->redirectToRoute('app_wallet_list');
     }
 
 }
