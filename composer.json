@@ -34,7 +34,8 @@
         "twbs/bootstrap": "^3.0",
         "jquery/jquery":  "^1.11",
         "bmatzner/fontawesome-bundle": "^4.6",
-        "sentry/sentry-symfony": "^0.6.0"
+        "sentry/sentry-symfony": "^0.6.0",
+        "cspoo/swiftmailer-mailgun-bundle": "^0.3.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

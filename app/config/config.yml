@@ -42,6 +42,9 @@ twig:
     form_themes:
         - BraincraftedBootstrapBundle:Form:bootstrap.html.twig
 
+cspoo_swiftmailer_mailgun:
+    key: "%mailgun_key%"
+    domain: "%mailgun_domain%"
 
 # Swiftmailer Configuration
 swiftmailer:
