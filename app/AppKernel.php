@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             // APP BUNDLES
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
+            new MailBundle\MailBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

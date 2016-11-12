@@ -10,6 +10,9 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class AppBundle extends Bundle
 {
+    /**
+     * @return AppBundleExtension
+     */
     public function getContainerExtension()
     {
         return new AppBundleExtension();
