@@ -46,11 +46,23 @@ class Wallet
     private $transactions;
 
     /**
+     * var
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+     */
+    private $owner;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="viewableWallets")
+     */
+    private $sharedWith;
+
+    /**
      * Wallet constructor.
      */
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
+        $this->sharedWith = new ArrayCollection();
     }
 
     /**
@@ -109,5 +121,37 @@ class Wallet
     public function getTransactions(): Collection
     {
         return $this->transactions;
+    }
+
+    /**
+     * @return User
+     */
+    public function getOwner(): User
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param User $owner
+     */
+    public function setOwner(User $owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSharedWith()
+    {
+        return $this->sharedWith;
+    }
+
+    /**
+     * @param mixed $sharedWith
+     */
+    public function setSharedWith($sharedWith)
+    {
+        $this->sharedWith = $sharedWith;
     }
 }

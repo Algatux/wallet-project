@@ -1,0 +1,6 @@
+services:
+  app.security.wallet_voter:
+    class: AppBundle\Security\WalletVoter
+    tags:
+      - { name: security.voter }
+    public: false

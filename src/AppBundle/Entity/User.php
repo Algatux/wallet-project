@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,10 +35,17 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=24, nullable=true)
      */
     private $nickName;
+    /**
+     * @var Wallet[]|ArrayCollection
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Wallet", inversedBy="sharedWith")
+     * @ORM\JoinTable(name="users_wallets")
+     */
+    private $viewableWallets;
 
     public function __construct()
     {
         parent::__construct();
+        $this->viewableWallets = new ArrayCollection();
     }
 
     /**
@@ -116,5 +124,21 @@ class User extends BaseUser
         $this->nickName = $this->username;
 
         return $this;
+    }
+
+    /**
+     * @return Wallet[]|ArrayCollection
+     */
+    public function getViewableWallets()
+    {
+        return $this->viewableWallets;
+    }
+
+    /**
+     * @param Wallet[]|ArrayCollection $viewableWallets
+     */
+    public function setViewableWallets($viewableWallets)
+    {
+        $this->viewableWallets = $viewableWallets;
     }
 }

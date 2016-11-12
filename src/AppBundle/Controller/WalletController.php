@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Wallet;
 use AppBundle\Form\WalletType;
+use AppBundle\Repository\WalletRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,8 +22,11 @@ class WalletController extends BaseController
      */
     public function listAction()
     {
+        /** @var WalletRepository $walletRepo */
+        $walletRepo = $this->getRepository(Wallet::class);
+
         return [
-            "wallets" => $this->getRepository(Wallet::class)->findAll(),
+            "wallets" => $walletRepo->getVisibleWalletsByUser($this->getUser()),
         ];
     }
 
@@ -36,6 +40,8 @@ class WalletController extends BaseController
      */
     public function detailAction(Wallet $wallet)
     {
+        $this->denyAccessUnlessGranted('VIEW', $wallet);
+
         return [
             "wallet" => $wallet,
             "totalTransactioned" => $this->getEm()
@@ -66,6 +72,7 @@ class WalletController extends BaseController
 
             /** @var Wallet $wallet */
             $wallet = $form->getData();
+            $wallet->setOwner($this->getUser());
 
             $this->getEm()->beginTransaction();
             try{
@@ -102,6 +109,8 @@ class WalletController extends BaseController
      */
     public function editAction(Request $request, Wallet $wallet)
     {
+        $this->denyAccessUnlessGranted('EDIT', $wallet);
+
         $form = $this->createForm(WalletType::class, $wallet);
 
         $form->handleRequest($request);
@@ -142,6 +151,8 @@ class WalletController extends BaseController
      */
     public function deleteAction(Wallet $wallet)
     {
+        $this->denyAccessUnlessGranted('DELETE', $wallet);
+
         $this->getEm()->beginTransaction();
         try{
             $this->get('app.service_wallet.wallet_persister')->delete($wallet);
