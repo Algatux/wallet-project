@@ -75,6 +75,8 @@ class TransactionController extends BaseController
     {
         $redirect = $this->redirectToRoute('app_wallet_detail', ["wallet" => $transaction->getWallet()->getId()]);
 
+        $this->getEm()->beginTransaction();
+
         try{
 
             $this

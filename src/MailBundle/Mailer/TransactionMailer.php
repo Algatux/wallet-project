@@ -6,6 +6,9 @@ namespace MailBundle\Mailer;
 
 use AppBundle\Entity\Transaction;
 
+/**
+ * Class TransactionMailer
+ */
 class TransactionMailer extends Mailer
 {
     /**
@@ -16,7 +19,7 @@ class TransactionMailer extends Mailer
     public function notifyTransactionCreated(Transaction $transaction)
     {
         $message = $this->getNewMessage('Vault - new transaction added!')
-            ->setFrom('me@vault.algatux.it')
+            ->setFrom('vault@algatux.it', 'Vault')
             ->setTo('a.galli85@gmail.com')
             ->setBody(
                 sprintf(
