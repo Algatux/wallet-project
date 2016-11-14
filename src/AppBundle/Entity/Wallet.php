@@ -140,17 +140,17 @@ class Wallet
     }
 
     /**
-     * @return mixed
+     * @return Collection
      */
-    public function getSharedWith()
+    public function getSharedWith(): Collection
     {
         return $this->sharedWith;
     }
 
     /**
-     * @param mixed $sharedWith
+     * @param ArrayCollection $sharedWith
      */
-    public function setSharedWith($sharedWith)
+    public function setSharedWith(ArrayCollection $sharedWith)
     {
         $this->sharedWith = $sharedWith;
     }

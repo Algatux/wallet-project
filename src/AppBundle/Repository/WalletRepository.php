@@ -5,7 +5,6 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Transaction;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Wallet;
-use Doctrine\ORM\Query\Expr\GroupBy;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 

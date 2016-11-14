@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Transaction;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Wallet;
 use AppBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,19 +22,30 @@ class TransactionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var Wallet $wallet */
+        $wallet = $options['wallet'];
+        $transactedBy = [
+            $wallet->getOwner()->getNickName() => $wallet->getOwner(),
+        ];
+
+        /** @var User $user */
+        foreach ($wallet->getSharedWith() as $user) {
+            $transactedBy[$user->getNickName()] = $user;
+        }
+
         $builder
             ->add(
                 'motivation',
                 TextType::class,
                 [
-                    "label" => "Transaction Motivation"
+                    "label" => "Transaction Motivation",
                 ]
             )
             ->add(
                 'amount',
                 NumberType::class,
                 [
-                    "label" => "Money Amount"
+                    "label" => "Money Amount",
                 ]
             )
             ->add(
@@ -44,27 +56,24 @@ class TransactionType extends AbstractType
                     "choices" => [
                         "MoneyOut"  => Transaction::TYPE_OUT,
                         "MoneyIn"   => Transaction::TYPE_IN,
-                    ]
+                    ],
                 ]
             )
-//            ->add(
-//                'transactedBy',
-//                EntityType::class,
-//                [
-//                    "class" => User::class,
-//                    "query_builder" => function(UserRepository $userRepository){
-//
-//                        return $userRepository->getUserListQueryBuilder();
-//                    },
-//                    "choice_label" => "nickName",
-//                    "label" => "Transacted by"
-//                ]
-//            )
+            ->add(
+                'transactedBy',
+                EntityType::class,
+                [
+                    "class" => User::class,
+                    "choices" => $transactedBy,
+                    "choice_label" => "nickName",
+                    "label" => "Transacted by",
+                ]
+            )
             ->add(
                 'submit',
                 SubmitType::class,
                 [
-                    "label" => "Create"
+                    "label" => "Create",
                 ]
             );
     }
@@ -75,7 +84,8 @@ class TransactionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Transaction::class
+            'data_class' => Transaction::class,
+            'wallet' => null,
         ));
     }
 

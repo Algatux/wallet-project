@@ -28,15 +28,14 @@ class TransactionController extends BaseController
      */
     public function addAction(Request $request, Wallet $wallet)
     {
-        $form = $this->createForm(TransactionType::class);
+        $transaction = new Transaction();
+        $transaction->setTransactedBy($this->getUser());
+
+        $form = $this->createForm(TransactionType::class, $transaction, ["wallet" => $wallet]);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-
-            /** @var Transaction $transaction */
-            $transaction = $form->getData();
-            $transaction->setTransactedBy($this->getUser());
 
             $this->getEm()->beginTransaction();
             try{
