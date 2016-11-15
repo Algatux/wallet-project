@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Sentry\SentryBundle\SentryBundle(),
             new cspoo\Swiftmailer\MailgunBundle\cspooSwiftmailerMailgunBundle(),
+            new Http\HttplugBundle\HttplugBundle(),
 
             // APP BUNDLES
             new AppBundle\AppBundle(),

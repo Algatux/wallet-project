@@ -5,5 +5,5 @@ services:
     arguments:
       - '@doctrine.orm.entity_manager'
       - '@mail.mailer.transaction_mailer'
-#    tags:
-#      - { name: kernel.event_listener, event: event.transaction.created, method: onTransactionCreated }
+    tags:
+      - { name: kernel.event_listener, event: event.transaction.created, method: onTransactionCreated }

@@ -5,6 +5,7 @@ imports:
     - { resource: vendors/fos.yml }
     - { resource: vendors/assetic.yml }
     - { resource: vendors/sentry.yml }
+    - { resource: vendors/httplug.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -46,10 +47,11 @@ twig:
 cspoo_swiftmailer_mailgun:
     key: "%mailgun_key%"
     domain: "%mailgun_domain%"
+    http_client: 'httplug.client'
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "mailgun"
+    transport: "%mailer_transport%"
     spool:     { type: memory }
 
 

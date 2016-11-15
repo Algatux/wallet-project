@@ -1,0 +1,17 @@
+httplug:
+    classes:
+      client: Http\Adapter\Guzzle6\Client
+      message_factory: Http\Message\MessageFactory\GuzzleMessageFactory
+      uri_factory: Http\Message\UriFactory\GuzzleUriFactory
+      stream_factory: Http\Message\StreamFactory\GuzzleStreamFactory
+    plugins:
+        logger: ~
+    clients:
+        guzzle_client:
+            factory: 'httplug.factory.guzzle6'
+            plugins: ['httplug.plugin.logger']
+            config:
+                verify: false
+                timeout: 2
+    toolbar:
+        captured_body_length: 1000
