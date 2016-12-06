@@ -30,11 +30,11 @@ class TransactionMailer extends Mailer
             ->setFrom('vault@algatux.it', 'Vault')
             ->setTo($to)
             ->setBody(
-                sprintf(
-                    'New Transaction of amount: %.2f € added by %s because of "%s"',
-                    $transaction->getAmount(),
-                    $transaction->getTransactedBy()->getNickName(),
-                    $transaction->getMotivation()
+                $this->renderer()->render(
+                    "@Mail/newTransaction.html.twig",
+                    [
+                        "transaction" => $transaction
+                    ]
                 ),
                 'text/html'
             );
