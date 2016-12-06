@@ -47,12 +47,12 @@ class Wallet
 
     /**
      * var
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      */
     private $owner;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="viewableWallets")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="viewableWallets", cascade={"persist", "remove"})
      */
     private $sharedWith;
 
@@ -152,6 +152,31 @@ class Wallet
      */
     public function setSharedWith(ArrayCollection $sharedWith)
     {
+        dump('set');
         $this->sharedWith = $sharedWith;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function addSharedWith(User $user)
+    {
+        dump('add in wallet');
+        if (!$this->sharedWith->contains($user)) {
+            $this->sharedWith->add($user);
+            $user->addViewableWallet($this);
+        }
+
+    }
+
+    /**
+     * @param User $user
+     */
+    public function removeSharedWith(User $user)
+    {
+        if ($this->sharedWith->contains($user)) {
+            $this->sharedWith->removeElement($user);
+            $user->removeViewableWallet($this);
+        }
     }
 }

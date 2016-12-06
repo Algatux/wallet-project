@@ -37,7 +37,7 @@ class User extends BaseUser
     private $nickName;
     /**
      * @var Wallet[]|ArrayCollection
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Wallet", inversedBy="sharedWith")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Wallet", inversedBy="sharedWith", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="users_wallets")
      */
     private $viewableWallets;
@@ -140,5 +140,27 @@ class User extends BaseUser
     public function setViewableWallets($viewableWallets)
     {
         $this->viewableWallets = $viewableWallets;
+    }
+
+    /**
+     * @param Wallet $wallet
+     */
+    public function addViewableWallet(Wallet $wallet)
+    {
+        if (!$this->viewableWallets->contains($wallet)) {
+            $this->viewableWallets->add($wallet);
+            $wallet->addSharedWith($this);
+        }
+    }
+
+    /**
+     * @param Wallet $wallet
+     */
+    public function removeViewableWallet(Wallet $wallet)
+    {
+        if ($this->viewableWallets->contains($wallet)) {
+            $this->viewableWallets->removeElement($wallet);
+            $wallet->removeSharedWith($this);
+        }
     }
 }

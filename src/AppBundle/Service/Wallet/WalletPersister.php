@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Service\Wallet;
 
+use AppBundle\Entity\User;
 use AppBundle\Entity\Wallet;
 use AppBundle\Event\WalletEvent;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,7 +48,8 @@ class WalletPersister
      */
     public function update(Wallet $wallet)
     {
-        $this->entityManager->flush([$wallet]);
+//        $persistionList = $this->cleanAndPrepareSharedWith($wallet);
+        $this->entityManager->flush($wallet);
 
         $this->eventDispatcher->dispatch(WalletEvent::EVENT_UPDATED, new WalletEvent($wallet));
     }
@@ -61,5 +63,18 @@ class WalletPersister
         $this->entityManager->flush([$wallet]);
 
         $this->eventDispatcher->dispatch(WalletEvent::EVENT_DELETED, new WalletEvent($wallet));
+    }
+
+    private function cleanAndPrepareSharedWith(Wallet $wallet): array
+    {
+        dump($wallet->getSharedWith());
+        $persistionList = [$wallet];
+        /** @var User $user */
+        foreach ($wallet->getSharedWith() as $user){
+            $persistionList[] = $user;
+            $this->entityManager->persist($user);
+        }
+
+        return $persistionList;
     }
 }
