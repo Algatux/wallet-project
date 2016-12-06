@@ -64,7 +64,11 @@ class WalletController extends BaseController
      */
     public function createAction(Request $request)
     {
-        $form = $this->createForm(WalletType::class);
+        $form = $this->createForm(
+            WalletType::class,
+            null,
+            ["owner" => $this->getUser()]
+        );
 
         $form->handleRequest($request);
 

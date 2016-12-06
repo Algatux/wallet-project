@@ -52,7 +52,8 @@ class Wallet
     private $owner;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="viewableWallets", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="viewableWallets", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="users_wallets")
      */
     private $sharedWith;
 
@@ -124,9 +125,9 @@ class Wallet
     }
 
     /**
-     * @return User
+     * @return User|null
      */
-    public function getOwner(): User
+    public function getOwner()
     {
         return $this->owner;
     }

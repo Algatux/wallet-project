@@ -37,8 +37,7 @@ class User extends BaseUser
     private $nickName;
     /**
      * @var Wallet[]|ArrayCollection
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Wallet", inversedBy="sharedWith", cascade={"persist", "remove"})
-     * @ORM\JoinTable(name="users_wallets")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Wallet", mappedBy="sharedWith", cascade={"persist", "remove"})
      */
     private $viewableWallets;
 
