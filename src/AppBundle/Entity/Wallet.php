@@ -153,7 +153,6 @@ class Wallet
      */
     public function setSharedWith(ArrayCollection $sharedWith)
     {
-        dump('set');
         $this->sharedWith = $sharedWith;
     }
 
@@ -162,7 +161,6 @@ class Wallet
      */
     public function addSharedWith(User $user)
     {
-        dump('add in wallet');
         if (!$this->sharedWith->contains($user)) {
             $this->sharedWith->add($user);
             $user->addViewableWallet($this);
