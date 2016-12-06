@@ -34,7 +34,7 @@ abstract class Mailer
      */
     protected function renderer(): TwigEngine
     {
-        $this->twigEngine;
+        return $this->twigEngine;
     }
 
     /**
