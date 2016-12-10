@@ -29,6 +29,9 @@ monolog:
         #chromephp:
         #    type:   chromephp
         #    level:  info
-
+sentry:
+#    error_types: 0
+    skip_capture:
+      - "\\Exception"
 #swiftmailer:
 #    delivery_address: me@example.com
