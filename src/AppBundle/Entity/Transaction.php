@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Contracts\TimeblameableInterface;
+use AppBundle\Entity\Traits\TimeblameableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,8 +13,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="transaction")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TransactionRepository")
  */
-class Transaction
+class Transaction implements TimeblameableInterface
 {
+    use TimeblameableEntity;
+
     const TYPE_IN = 1;
     const TYPE_OUT = 2;
 
