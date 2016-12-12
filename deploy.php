@@ -9,6 +9,8 @@ require 'recipe/symfony3.php';
 // Set configurations
 set('repository', 'https://github.com/Algatux/wallet-project.git');
 set('shared_files', []);
+set('shared_dirs', ['var/logs', 'var/sessions', 'var/storage']);
+set('writable_dirs', ['var/cache', 'var/logs', 'var/sessions', 'var/storage']);
 
 // Configure servers
 server('production', '104.236.15.230')

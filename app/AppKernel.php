@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Sentry\SentryBundle\SentryBundle(),
             new cspoo\Swiftmailer\MailgunBundle\cspooSwiftmailerMailgunBundle(),
             new Http\HttplugBundle\HttplugBundle(),
+            new Oneup\FlysystemBundle\OneupFlysystemBundle(),
 
             // APP BUNDLES
             new AppBundle\AppBundle(),

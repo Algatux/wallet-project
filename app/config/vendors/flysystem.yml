@@ -1,0 +1,10 @@
+oneup_flysystem:
+
+    adapters:
+        transaction_storage_fs_adapter:
+            local:
+                directory: '%kernel.root_dir%/../var/storage/transactions'
+
+    filesystems:
+        transactions:
+            adapter: transaction_storage_fs_adapter
