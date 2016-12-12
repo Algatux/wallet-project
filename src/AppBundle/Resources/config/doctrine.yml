@@ -1,0 +1,7 @@
+services:
+
+  app.entity_subscriber.timeblameable_subscriber:
+      class: AppBundle\Entity\Subscriber\TimeblameableSubscriber
+      arguments: ['@security.token_storage']
+      tags:
+        - { name: doctrine.event_subscriber }

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Contracts\TimeblameableInterface;
+use AppBundle\Entity\Traits\TimeblameableEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,8 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="wallet")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\WalletRepository")
  */
-class Wallet
+class Wallet implements TimeblameableInterface
 {
+    use TimeblameableEntity;
+
     /**
      * @var int
      *

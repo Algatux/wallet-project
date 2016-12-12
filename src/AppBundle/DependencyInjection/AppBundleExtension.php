@@ -20,5 +20,6 @@ class AppBundleExtension extends Extension
 
         $loader->load('services.yml');
         $loader->load('security.yml');
+        $loader->load('doctrine.yml');
     }
 }
