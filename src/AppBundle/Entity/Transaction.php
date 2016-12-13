@@ -2,9 +2,12 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Contracts\FileAwareInterface;
 use AppBundle\Entity\Contracts\TimeblameableInterface;
+use AppBundle\Entity\Traits\FileAwareEntity;
 use AppBundle\Entity\Traits\TimeblameableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,9 +16,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="transaction")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TransactionRepository")
  */
-class Transaction implements TimeblameableInterface
+class Transaction implements TimeblameableInterface, FileAwareInterface
 {
     use TimeblameableEntity;
+    use FileAwareEntity;
 
     const TYPE_IN = 1;
     const TYPE_OUT = 2;
@@ -70,6 +74,11 @@ class Transaction implements TimeblameableInterface
      * @ORM\JoinColumn(name="transacted_by_user_id", referencedColumnName="id", nullable=false)
      */
     private $transactedBy;
+
+    /**
+     * @var UploadedFile
+     */
+    private $uploadedFile;
 
     /**
      * Get id
@@ -191,6 +200,22 @@ class Transaction implements TimeblameableInterface
     public function setTransactedBy(User $transactedBy)
     {
         $this->transactedBy = $transactedBy;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getUploadedFile()
+    {
+        return $this->uploadedFile;
+    }
+
+    /**
+     * @param UploadedFile $uploadedFile
+     */
+    public function setUploadedFile(UploadedFile $uploadedFile = null)
+    {
+        $this->uploadedFile = $uploadedFile;
     }
 }
 

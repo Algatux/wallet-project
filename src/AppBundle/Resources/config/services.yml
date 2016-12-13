@@ -19,3 +19,9 @@ services:
     arguments:
       - '@doctrine.orm.entity_manager'
       - '@event_dispatcher'
+
+  # STORAGES
+  app.service_storage.transaction_storage:
+    class: AppBundle\Service\Storage\TransactionStorage
+    arguments:
+      - '@oneup_flysystem.transactions_filesystem'

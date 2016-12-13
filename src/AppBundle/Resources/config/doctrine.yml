@@ -4,4 +4,9 @@ services:
       class: AppBundle\Entity\Subscriber\TimeblameableSubscriber
       arguments: ['@security.token_storage']
       tags:
+
+  app.entity_subscriber.transaction_subscriber:
+      class: AppBundle\Entity\Subscriber\TransactionSubscriber
+      arguments: ['@app.service_storage.transaction_storage']
+      tags:
         - { name: doctrine.event_subscriber }

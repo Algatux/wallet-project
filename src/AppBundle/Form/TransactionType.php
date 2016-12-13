@@ -9,6 +9,7 @@ use AppBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -67,6 +68,13 @@ class TransactionType extends AbstractType
                     "choices" => $transactedBy,
                     "choice_label" => "nickName",
                     "label" => "Transacted by",
+                ]
+            )
+            ->add(
+                'uploadedFile',
+                FileType::class,
+                [
+                    "label" => "allega un file"
                 ]
             )
             ->add(
