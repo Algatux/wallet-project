@@ -10,6 +10,7 @@ use AppBundle\Service\Storage\File;
 use AppBundle\Service\Storage\TransactionStorage;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class TransactionSubscriber
@@ -74,6 +75,11 @@ class TransactionSubscriber implements EventSubscriber
         /** @var Transaction $entity */
         $entity = $args->getEntity();
         $uploadedFile = $entity->getUploadedFile();
+
+        if (!$uploadedFile instanceof UploadedFile || !$uploadedFile->isValid()) {
+            return;
+        }
+
         $tmpFileName = uniqid();
 
         $uploadedFile->move('/tmp', $tmpFileName);
@@ -99,6 +105,10 @@ class TransactionSubscriber implements EventSubscriber
         /** @var Transaction $entity */
         $entity = $args->getEntity();
 
+        if (null === $entity->getFileName()) {
+            return;
+        }
+
         $this->storage->save($entity);
     }
 
@@ -113,6 +123,10 @@ class TransactionSubscriber implements EventSubscriber
 
         /** @var Transaction $entity */
         $entity = $args->getEntity();
+
+        if (null === $entity->getFileName()) {
+            return;
+        }
 
         $this->storage->delete($entity);
     }

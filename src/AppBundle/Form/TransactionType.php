@@ -74,7 +74,8 @@ class TransactionType extends AbstractType
                 'uploadedFile',
                 FileType::class,
                 [
-                    "label" => "allega un file"
+                    "label" => "Allega un file",
+                    "required" => false,
                 ]
             )
             ->add(
