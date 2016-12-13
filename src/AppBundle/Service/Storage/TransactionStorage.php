@@ -29,6 +29,18 @@ class TransactionStorage
     }
 
     /**
+     * @param FileAwareInterface $entity
+     *
+     * @return string
+     */
+    public function get(FileAwareInterface $entity): string
+    {
+        $fileContent = $this->filesystem->read($entity->getFilename());
+
+        return is_string($fileContent) ? $fileContent : '';
+    }
+
+    /**
      * @param Transaction|FileAwareInterface $entity
      *
      * @return bool

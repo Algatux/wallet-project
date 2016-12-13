@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class TransactionController
@@ -94,6 +95,24 @@ class TransactionController extends BaseController
         }
 
         return $redirect;
+    }
+
+    /**
+     * @Route("/transaction/{transaction}/download")
+     *
+     * @param Transaction $transaction
+     *
+     * @return Response
+     */
+    public function downloadAction(Transaction $transaction)
+    {
+        $fileContent = $this->get('app.service_storage.transaction_storage')->get($transaction);
+
+        $response = new Response();
+        $response->setContent($fileContent);
+        $response->headers->set('Content-type', $transaction->getMimeType());
+
+        return $response;
     }
 
 }
