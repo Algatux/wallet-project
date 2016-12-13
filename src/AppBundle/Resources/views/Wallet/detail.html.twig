@@ -36,7 +36,6 @@
                         <th>By</th>
                         <th>Amount</th>
                         <th></th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,8 +51,6 @@
                                     <i class="fa fa-download"></i>
                                 </a>
                                 &nbsp;
-                                &nbsp;
-                                &nbsp;
                             {% endif %}
                             <a class="btn btn-danger" href="{{ url('app_transaction_remove', {transaction: transaction.id}) }}">
                                 <i class="fa fa-trash"></i>
@@ -68,7 +65,6 @@
                 <tr>
                     <td colspan="4">Total transfered</td>
                     <td>{{ totalTransactioned | number_format(2) }} €</td>
-                    <td></td>
                 </tr>
                 </tbody>
             </table>
