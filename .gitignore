@@ -25,3 +25,4 @@
 /web/css/
 /web/js/
 /.idea/
+/deploy_vars.php
