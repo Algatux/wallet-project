@@ -111,6 +111,9 @@ class TransactionController extends BaseController
         $response = new Response();
         $response->setContent($fileContent);
         $response->headers->set('Content-type', $transaction->getMimeType());
+        $response->headers
+            ->set('Content-Disposition', sprintf('attachment; filename="%s";', $transaction->getFileName()));
+        $response->headers->set('Content-length', strlen($fileContent));
 
         return $response;
     }
