@@ -19,14 +19,27 @@ class WalletController extends BaseController
     /**
      * @Route("/list", name="app_wallet_list")
      * @Template()
+     *
+     * @param Request $request
+     *
+     * @return array
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
         /** @var WalletRepository $walletRepo */
         $walletRepo = $this->getRepository(Wallet::class);
 
+        $qb = $walletRepo->getVisibleWalletsByUserQb($this->getUser());
+
+        $paginator = $this->get('facile.paginator');
+        $paginator->parseRequest($request);
+        $paginator->setNumberOfElementsPerPage(4);
+
+        $walletRepo->getVisibleWalletsByUser($this->getUser());
+
         return [
-            "wallets" => $walletRepo->getVisibleWalletsByUser($this->getUser()),
+            "paginationInfo" => $paginator->getPaginationInfo($qb),
+            "wallets" => $paginator->paginate($qb)
         ];
     }
 

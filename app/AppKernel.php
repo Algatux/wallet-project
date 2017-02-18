@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new cspoo\Swiftmailer\MailgunBundle\cspooSwiftmailerMailgunBundle(),
             new Http\HttplugBundle\HttplugBundle(),
             new Oneup\FlysystemBundle\OneupFlysystemBundle(),
+            new Facile\PaginatorBundle\FacilePaginatorBundle(),
 
             // APP BUNDLES
             new AppBundle\AppBundle(),

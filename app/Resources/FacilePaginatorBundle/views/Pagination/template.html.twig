@@ -1,0 +1,34 @@
+{% if (paginationInfo.pages is not null) and (paginationInfo.page is not null) and (paginationInfo.path is not null) and (paginationInfo.pages > 0) and (paginationInfo.page <= paginationInfo.pages) %}
+
+    <ul class="pagination">
+        {% set paginationStart =  paginationInfo.page - 5 > 0 ? paginationInfo.page -5 : 1 %}
+        {% set paginationEnd =  paginationInfo.page + 5 <= paginationInfo.pages ? paginationInfo.page + 5 : paginationInfo.pages %}
+
+        {% if paginationStart > 1 %}
+            <li>
+                <a href="{{ path(paginationInfo.path, paginationInfo.query|merge(paginationInfo.routeParams)|merge({'page': 1})) }}">{{ 1 }}
+                    ... </a>
+            </li>
+        {% endif %}
+
+        {% for i in paginationStart..paginationEnd %}
+            <li>
+                {% if i != paginationInfo.page %}
+                    <a href="{{ path(paginationInfo.path, paginationInfo.query|merge(paginationInfo.routeParams)|merge({'page': i})) }}">{{ i }}</a>
+                {% else %}
+                    <span class="active">{{ i }}</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+
+        {% if paginationEnd < paginationInfo.pages %}
+            <li>
+                <a href="{{ path(paginationInfo.path, paginationInfo.query|merge(paginationInfo.routeParams)|merge({'page': paginationInfo.pages})) }}">
+                    ...{{ paginationInfo.pages }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+
+{% endif %}
+

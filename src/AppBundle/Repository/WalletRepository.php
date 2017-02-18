@@ -20,11 +20,23 @@ class WalletRepository extends EntityRepository
      */
     public function getVisibleWalletsByUser(User $user): array
     {
+        return $this->getVisibleWalletsByUserQb($user)->getQuery()->getResult();
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return QueryBuilder
+     */
+    public function getVisibleWalletsByUserQb(User $user): QueryBuilder
+    {
         $qb = $this->createQueryBuilder('wallet');
 
         $this->filterByOwnerOrSharedWith($qb, $user);
 
-        return $qb->getQuery()->getResult();
+        $qb->orderBy('wallet.id', 'DESC');
+
+        return $qb;
     }
 
     /**
