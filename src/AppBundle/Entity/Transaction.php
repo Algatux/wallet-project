@@ -47,7 +47,7 @@ class Transaction implements TimeblameableInterface, FileAwareInterface
     private $motivation;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="amount", type="decimal", precision=10, scale=2, options={"default":0.0})
      * @Assert\GreaterThanOrEqual(0.0)
@@ -136,6 +136,18 @@ class Transaction implements TimeblameableInterface, FileAwareInterface
     public function getAmount()
     {
         return $this->amount;
+    }
+
+    /**
+     * @return float
+     */
+    public function getFloatAmount(): float
+    {
+        if ($this->type === self::TYPE_OUT) {
+            return (float)($this->getAmount()*(-1));
+        }
+
+        return (float)$this->getAmount();
     }
 
     /**

@@ -129,6 +129,27 @@ class Wallet implements TimeblameableInterface
     }
 
     /**
+     * @return float
+     */
+    public function getTransactionsTotalAmount(): float
+    {
+        $transactions = $this->getTransactions();
+
+        if ($transactions->isEmpty()) {
+            return .0;
+        }
+
+        return array_reduce(
+            $transactions->toArray(),
+            function($carry, Transaction $tr){
+                dump($tr->getFloatAmount());
+                return $carry + $tr->getFloatAmount();
+            },
+            .0
+        );
+    }
+
+    /**
      * @return User|null
      */
     public function getOwner()

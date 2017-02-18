@@ -19,10 +19,16 @@
                     <a href="{{ url('app_wallet_detail', {wallet: wallet.id}) }}" class="list-group-item">
                         <h4 class="list-group-item-heading">{{ wallet.name }}</h4>
                         {% if wallet.description | length %}<p class="list-group-item-text">{{ wallet.description }}</p>{% endif %}
-                        <p class="list-group-item-text">Owner: {{ wallet.owner.nickName }}</p>
-                        {% if wallet.sharedWith | length %}
-                            <p class="list-group-item-text">Shared with: {{ wallet | wallet_share_name_list }}</p>
-                        {% endif %}
+                        <p class="list-group-item-text">
+                            Owner: {{ wallet.owner.nickName }}
+                            {% if wallet.sharedWith | length %}
+                                , shared with: {{ wallet | wallet_share_name_list }}
+                            {% endif %}
+                        </p>
+                        <p>
+                            Total: {{ wallet.transactionsTotalAmount | number_format(2) }} €
+                        </p>
+
                     </a>
                 {% endfor %}
             </div>
