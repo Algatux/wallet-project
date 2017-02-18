@@ -142,7 +142,6 @@ class Wallet implements TimeblameableInterface
         return array_reduce(
             $transactions->toArray(),
             function($carry, Transaction $tr){
-                dump($tr->getFloatAmount());
                 return $carry + $tr->getFloatAmount();
             },
             .0
