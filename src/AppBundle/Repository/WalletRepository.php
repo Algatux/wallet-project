@@ -34,6 +34,7 @@ class WalletRepository extends EntityRepository
 
         $this->filterByOwnerOrSharedWith($qb, $user);
 
+        $qb->orderBy('wallet.createdAt', 'DESC');
         $qb->orderBy('wallet.id', 'DESC');
 
         return $qb;
