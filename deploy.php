@@ -10,6 +10,8 @@ require 'recipe/symfony3.php';
 require './deploy_vars.php';
 
 // Set configurations
+set('ssh_type', 'native');
+set('ssh_multiplexing', true);
 set('repository', $_dep['repository']);
 set('shared_files', []);
 set('shared_dirs', ['var/logs', 'var/sessions', 'var/storage']);
@@ -41,9 +43,16 @@ task('permissions:fix', function () use ($_dep)  {
  * Assets dump!
  */
 task('assets:dump', function () use ($_dep)  {
-    run($_dep['server']['deploy_path'].'/release/bin/console assetic:dump --env=prod');
+    run('{{env_vars}} {{bin/php}} {{bin/console}} assetic:dump {{console_options}}');
+})->desc('Assets dump!');
+/**
+ * cache clear!
+ */
+task('clear:cache', function () use ($_dep)  {
+    run('{{env_vars}} {{bin/php}} {{bin/console}} cache:clear {{console_options}}');
 })->desc('Assets dump!');
 
 before('deploy:vendors', 'config:copy');
 after('config:copy', 'permissions:fix');
 after('deploy:vendors', 'assets:dump');
+before('deploy:cache:warmup', 'clear:cache');
