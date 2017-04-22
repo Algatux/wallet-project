@@ -39,20 +39,24 @@ task('permissions:fix', function () use ($_dep)  {
     run('sudo chown -R www-data:www-data '.$_dep['server']['deploy_path'].'/shared/var/logs');
     run('sudo chown -R www-data:www-data '.$_dep['server']['deploy_path'].'/shared/var/sessions');
 })->desc('Fixes permissions');
-/**
- * Assets dump!
- */
+
+/** bower install! */
+task('bower:install', function () use ($_dep)  {
+    run('cd {{release_path}} && bower install');
+})->desc('Install bower dependencies!');
+
+/** Assets dump! */
 task('assets:dump', function () use ($_dep)  {
     run('{{env_vars}} {{bin/php}} {{bin/console}} assetic:dump {{console_options}}');
 })->desc('Assets dump!');
-/**
- * cache clear!
- */
+
+/** cache clear! */
 task('clear:cache', function () use ($_dep)  {
     run('{{env_vars}} {{bin/php}} {{bin/console}} cache:clear {{console_options}}');
-})->desc('Assets dump!');
+})->desc('Cleares symfony cache!');
 
 before('deploy:vendors', 'config:copy');
 after('config:copy', 'permissions:fix');
 after('deploy:vendors', 'assets:dump');
 before('deploy:cache:warmup', 'clear:cache');
+before('assets:dump', 'bower:install');

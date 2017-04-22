@@ -42,4 +42,40 @@
 
     </div>
 
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">Wallets total amount montly trend</div>
+
+        <div class="panel-body">
+            <canvas id="myChart" height="100"></canvas>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@chartjs' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
+        var data  = {
+            labels: {{ trendModel.labels | json_encode | raw }},
+            datasets: [
+                {
+                    label: "Trend",
+                    borderWidth: 1,
+                    data: {{ trendModel.data | json_encode | raw }}
+                }
+            ]
+        };
+
+        var chart =  new Chart($('#myChart'), {
+            type: 'bar',
+            data: data,
+            options: {}
+        });
+    </script>
 {% endblock %}

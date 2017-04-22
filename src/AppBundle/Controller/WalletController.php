@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Wallet;
 use AppBundle\Form\WalletType;
+use AppBundle\Model\Chartjs\WalletTotalTrendDataModel;
 use AppBundle\Repository\WalletRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,9 +38,13 @@ class WalletController extends BaseController
 
         $walletRepo->getVisibleWalletsByUser($this->getUser());
 
+        $wallets = $paginator->paginate($qb);
+        $trendModel = WalletTotalTrendDataModel::buildWithWalletList($wallets);
+
         return [
             "paginationInfo" => $paginator->getPaginationInfo($qb),
-            "wallets" => $paginator->paginate($qb)
+            "wallets" => $wallets,
+            "trendModel" => $trendModel
         ];
     }
 

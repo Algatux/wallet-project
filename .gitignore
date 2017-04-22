@@ -24,5 +24,6 @@
 /web/bundles/
 /web/css/
 /web/js/
+/web/assets/
 /.idea/
 /deploy_vars.php

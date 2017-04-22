@@ -43,7 +43,11 @@ assetic:
       output: js/bootstrap.js
     jquery:
       inputs:
-        - "%kernel.root_dir%/../vendor/jquery/jquery/jquery-1.11.1.js"
+        - "%kernel.root_dir%/../web/assets/vendor/jquery/dist/jquery.js"
       output: js/jquery.js
+    chartjs:
+      inputs:
+        - "%kernel.root_dir%/../web/assets/vendor/chart.js/dist/Chart.js"
+      output: js/chart.js
 
 

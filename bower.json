@@ -1,0 +1,14 @@
+{
+  "name": "wallet-project",
+  "homepage": "https://github.com/Algatux/wallet-project",
+  "authors": [
+    "Alessandro Galli <a.galli85@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "1.11.1",
+    "chart.js": "^2.5.0"
+  }
+}
