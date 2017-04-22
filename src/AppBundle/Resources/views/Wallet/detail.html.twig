@@ -32,7 +32,6 @@
                 <thead>
                     <tr>
                         <th>Motivation</th>
-                        <th>Type</th>
                         <th>By</th>
                         <th>Amount</th>
                         <th></th>
@@ -42,7 +41,6 @@
                 {% for transaction in wallet.transactions %}
                     <tr class="{{ transaction.type == 1 ? 'success' : 'danger' }}">
                         <td>{{ transaction.motivation }}</td>
-                        <td>{{ transaction.readableType }}</td>
                         <td>{{ transaction.transactedBy.nickName }}</td>
                         <td>{{ transaction.amount | number_format(2) }} €</td>
                         <td>
@@ -59,11 +57,11 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="5">No available transactions</td>
+                        <td colspan="4">No available transactions</td>
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="4">Total transfered</td>
+                    <td colspan="3">Total transfered</td>
                     <td>{{ totalTransactioned | number_format(2) }} €</td>
                 </tr>
                 </tbody>
