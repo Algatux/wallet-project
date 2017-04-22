@@ -42,6 +42,12 @@ class Wallet implements TimeblameableInterface
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="settled", type="boolean", options={"default": false}, nullable=false)
+     */
+    private $settled;
 
     /**
      * @var Transaction[]|Collection
@@ -68,6 +74,7 @@ class Wallet implements TimeblameableInterface
     {
         $this->transactions = new ArrayCollection();
         $this->sharedWith = new ArrayCollection();
+        $this->settled = false;
     }
 
     /**
@@ -118,6 +125,22 @@ class Wallet implements TimeblameableInterface
     public function setDescription(string $description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSettled(): bool
+    {
+        return $this->settled;
+    }
+
+    /**
+     * @param bool $settled
+     */
+    public function setSettled(bool $settled)
+    {
+        $this->settled = $settled;
     }
 
     /**

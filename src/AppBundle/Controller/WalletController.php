@@ -33,7 +33,7 @@ class WalletController extends BaseController
 
         $paginator = $this->get('facile.paginator');
         $paginator->parseRequest($request);
-        $paginator->setNumberOfElementsPerPage(4);
+        $paginator->setNumberOfElementsPerPage(10);
 
         $walletRepo->getVisibleWalletsByUser($this->getUser());
 
@@ -128,7 +128,7 @@ class WalletController extends BaseController
     {
         $this->denyAccessUnlessGranted('EDIT', $wallet);
 
-        $form = $this->createForm(WalletType::class, $wallet);
+        $form = $this->createForm(WalletType::class, $wallet, ['setSettled' => true]);
 
         $form->handleRequest($request);
 
