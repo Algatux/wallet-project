@@ -42,7 +42,7 @@
                     <tr class="{{ transaction.type == 1 ? 'success' : 'danger' }}">
                         <td>{{ transaction.motivation }}</td>
                         <td>{{ transaction.transactedBy.nickName }}</td>
-                        <td>{{ transaction.amount | number_format(2) }} €</td>
+                        <td>{{ transaction.amount | number_format(2) }}€</td>
                         <td>
                             {% if transaction.fileName %}
                                 <a class="btn btn-success" target="_blank" href="{{ url('app_transaction_download', {transaction: transaction.id}) }}">
@@ -61,8 +61,8 @@
                     </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="3">Total transfered</td>
-                    <td>{{ totalTransactioned | number_format(2) }} €</td>
+                    <td colspan="2">Total transfered</td>
+                    <td colspan="2">{{ totalTransactioned | number_format(2) }}€</td>
                 </tr>
                 </tbody>
             </table>
@@ -83,7 +83,7 @@
                         <td>{{ loop.index }}</td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.type | transaction_type | default('---') }}</td>
-                        <td>{{ user.amount }}</td>
+                        <td>{{ user.amount }}€</td>
                     </tr>
                 {% else %}
                     <tr>
