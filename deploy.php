@@ -42,7 +42,7 @@ task('permissions:fix', function () use ($_dep)  {
 
 /** bower install! */
 task('bower:install', function () use ($_dep)  {
-    run('cd {{release_path}} && bower install');
+    run('cd {{release_path}} && bower install --allow-root');
 })->desc('Install bower dependencies!');
 
 /** Assets dump! */
