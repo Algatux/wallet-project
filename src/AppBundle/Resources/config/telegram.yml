@@ -1,0 +1,11 @@
+services:
+  telegram_log:
+    class: unreal4u\TelegramAPI\TgLog
+    arguments:
+      - '%telegram_bot_id%'
+      - '@monolog.logger'
+
+  app.service_telegram.telegram_client:
+    class: AppBundle\Service\Telegram\TelegramClient
+    arguments:
+      - '@telegram_log'

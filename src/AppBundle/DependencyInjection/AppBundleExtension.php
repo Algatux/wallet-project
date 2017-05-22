@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace AppBundle\DependencyInjection;
 
@@ -21,5 +19,7 @@ class AppBundleExtension extends Extension
         $loader->load('services.yml');
         $loader->load('security.yml');
         $loader->load('doctrine.yml');
+        $loader->load('telegram.yml');
+        $loader->load('listeners.yml');
     }
 }

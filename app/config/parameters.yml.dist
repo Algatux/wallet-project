@@ -18,5 +18,5 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    mailgun_key: ~
-    mailgun_domain: ~
+    telegram_bot_id: ~
+    telegram_group_id: ~

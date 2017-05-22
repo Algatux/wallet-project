@@ -27,7 +27,7 @@ trait TimeblameableEntity
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", nullable=true)
-     * @var \DateTime|null
+     * @var User|null
      */
     protected $createdBy;
 
@@ -71,7 +71,7 @@ trait TimeblameableEntity
     }
 
     /**
-     * @return \DateTime|null
+     * @return User|null
      */
     public function getCreatedBy()
     {

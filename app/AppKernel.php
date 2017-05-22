@@ -25,15 +25,12 @@ class AppKernel extends Kernel
             new Bmatzner\FontAwesomeBundle\BmatznerFontAwesomeBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Sentry\SentryBundle\SentryBundle(),
-            new cspoo\Swiftmailer\MailgunBundle\cspooSwiftmailerMailgunBundle(),
-            new Http\HttplugBundle\HttplugBundle(),
             new Oneup\FlysystemBundle\OneupFlysystemBundle(),
             new Facile\PaginatorBundle\FacilePaginatorBundle(),
 
             // APP BUNDLES
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
-            new MailBundle\MailBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
