@@ -1,7 +1,7 @@
 braincrafted_bootstrap:
     output_dir:
     assets_dir: "%kernel.root_dir%/../vendor/twbs/bootstrap"
-    jquery_path: "%kernel.root_dir%/../vendor/jquery/jquery/jquery-1.11.1.js"
+    jquery_path: "%kernel.root_dir%/../web/assets/vendor/jquery/dist/jquery.js"
     css_preprocessor: less
     fonts_dir: "%kernel.root_dir%/../web/fonts"
     auto_configure:
