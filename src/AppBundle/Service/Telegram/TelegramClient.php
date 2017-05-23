@@ -26,15 +26,17 @@ class TelegramClient
 
     /**
      * @param string $message
-     * @param int    $groupId
+     * @param int $groupId
+     * @param string $parseMode
      *
      * @return TelegramTypes
      */
-    public function sendSimpleMessage(string $message, int $groupId): TelegramTypes
+    public function sendSimpleMessage(string $message, int $groupId, string $parseMode = 'markdown'): TelegramTypes
     {
         $send = new SendMessage();
         $send->chat_id = $groupId;
         $send->text = $message;
+        $send->parse_mode = $parseMode;
 
         return $this->tgLog->performApiRequest($send);
     }

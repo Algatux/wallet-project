@@ -34,9 +34,16 @@ class TransactionListener
     {
         $transaction = $event->getTransaction();
 
+        $text = [
+            "*Nuova transazione*",
+            "*utente*: %s",
+            "*motivazione*: %s",
+            "*spesa*: %.2f€",
+        ];
+
         $this->telegramClient->sendSimpleMessage(
             sprintf(
-                'Transazione aggiunta da %s, per: %s, di: %.2f €',
+                implode(PHP_EOL, $text),
                 $transaction->getTransactedBy()->getNickName(),
                 $transaction->getMotivation(),
                 abs($transaction->getFloatAmount())
