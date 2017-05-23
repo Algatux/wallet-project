@@ -4,8 +4,8 @@ imports:
 assetic:
   filters:
     less:
-      node: /usr/bin/node
-      node_paths: [/usr/lib/node_modules]
+      node: "%node_path%bin/node"
+      node_paths: ["%node_path%lib/node_modules"]
       apply_to: \.less$
     cssrewrite: ~
 

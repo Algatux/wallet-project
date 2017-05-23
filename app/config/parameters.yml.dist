@@ -20,3 +20,5 @@ parameters:
 
     telegram_bot_id: ~
     telegram_group_id: ~
+
+    node_path : ~
