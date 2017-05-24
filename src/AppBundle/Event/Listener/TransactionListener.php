@@ -3,14 +3,14 @@
 namespace AppBundle\Event\Listener;
 
 use AppBundle\Event\TransactionEvent;
-use AppBundle\Service\Telegram\TelegramClient;
+use Telegram\Bot\Api;
 
 /**
  * Class TransactionListener.
  */
 class TransactionListener
 {
-    /** @var TelegramClient */
+    /** @var Api */
     private $telegramClient;
     /** @var int */
     private $groupId;
@@ -18,10 +18,10 @@ class TransactionListener
     /**
      * TransactionListener constructor.
      *
-     * @param TelegramClient $telegramClient
-     * @param int            $groupId
+     * @param Api $telegramClient
+     * @param int $groupId
      */
-    public function __construct(TelegramClient $telegramClient, int $groupId)
+    public function __construct(Api $telegramClient, int $groupId)
     {
         $this->telegramClient = $telegramClient;
         $this->groupId = (int) $groupId;
@@ -40,15 +40,19 @@ class TransactionListener
             "*motivazione*: %s",
             "*spesa*: %.2f€",
         ];
-
-        $this->telegramClient->sendSimpleMessage(
-            sprintf(
-                implode(PHP_EOL, $text),
-                $transaction->getTransactedBy()->getNickName(),
-                $transaction->getMotivation(),
-                abs($transaction->getFloatAmount())
-            ),
-            $this->groupId
+        $text = sprintf(
+            implode(PHP_EOL, $text),
+            $transaction->getTransactedBy()->getNickName(),
+            $transaction->getMotivation(),
+            abs($transaction->getFloatAmount())
         );
+
+        $this->telegramClient->sendMessage([
+            'text' => $text,
+            'chat_id' => $this->groupId,
+            'parse_mode' => 'markdown'
+        ]);
+
+
     }
 }

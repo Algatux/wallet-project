@@ -18,6 +18,10 @@ security:
             pattern: ^/(_(profiler|wdt|error)|css|images|js)/
             security: false
 
+        webhook:
+            pattern:  ^/telegram
+            security: false
+
         main:
             form_login:
               provider: fos_userbundle
