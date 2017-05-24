@@ -1,0 +1,17 @@
+<?php declare(strict_types = 1);
+
+$_dep = [
+
+    'repository' => 'https://github.com/Algatux/wallet-project.git',
+
+    'server' => [
+        'user' => '',
+        'key_pub' => '',
+        'key_priv' => '',
+        'key_secret' => '',
+        'address' => '',
+        'port' => 22,
+        'deploy_path' => ''
+    ]
+
+];
