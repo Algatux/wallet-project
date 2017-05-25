@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: vendors/doctrine.yml }
+    - { resource: vendors/mongodb.yml }
     - { resource: vendors/fos.yml }
     - { resource: vendors/assetic.yml }
     - { resource: vendors/sentry.yml }

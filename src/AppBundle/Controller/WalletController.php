@@ -27,6 +27,10 @@ class WalletController extends BaseController
      */
     public function listAction(Request $request)
     {
+        $this->get('mongo.connection.wallet')->selectCollection('test')->insertOne([
+            "test" => 1
+        ]);
+
         /** @var WalletRepository $walletRepo */
         $walletRepo = $this->getRepository(Wallet::class);
 

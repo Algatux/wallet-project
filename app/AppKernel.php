@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Sentry\SentryBundle\SentryBundle(),
             new Oneup\FlysystemBundle\OneupFlysystemBundle(),
             new Facile\PaginatorBundle\FacilePaginatorBundle(),
+            new Facile\MongoDbBundle\FacileMongoDbBundle(),
 
             // APP BUNDLES
             new AppBundle\AppBundle(),
