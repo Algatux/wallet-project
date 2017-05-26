@@ -36,6 +36,11 @@ class User extends BaseUser
      */
     private $nickName;
     /**
+     * @var int
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $telegramId;
+    /**
      * @var Wallet[]|ArrayCollection
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Wallet", mappedBy="sharedWith", cascade={"persist", "remove"})
      */
@@ -161,5 +166,21 @@ class User extends BaseUser
             $this->viewableWallets->removeElement($wallet);
             $wallet->removeSharedWith($this);
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getTelegramId(): int
+    {
+        return $this->telegramId;
+    }
+
+    /**
+     * @param int $telegramId
+     */
+    public function setTelegramId(int $telegramId)
+    {
+        $this->telegramId = $telegramId;
     }
 }

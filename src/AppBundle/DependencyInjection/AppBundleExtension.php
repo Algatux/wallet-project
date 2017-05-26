@@ -7,6 +7,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
+/**
+ * Class AppBundleExtension.
+ */
 class AppBundleExtension extends Extension
 {
     /**

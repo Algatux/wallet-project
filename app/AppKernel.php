@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             // APP BUNDLES
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
+            new TelegramBundle\TelegramBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -1,3 +1,8 @@
+telegram:
+    resource: "@TelegramBundle/Controller/"
+    type:     annotation
+    prefix:   /telegram
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

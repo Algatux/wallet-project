@@ -20,5 +20,12 @@ parameters:
 
     telegram_bot_id: ~
     telegram_group_id: ~
+    telegram_hook_token: ~
 
     node_path : ~
+
+    mongodb_host_1: localhost
+    mongodb_port_1: 27017
+    mongodb_database: wallet
+    mongodb_user: ~
+    mongodb_password: ~

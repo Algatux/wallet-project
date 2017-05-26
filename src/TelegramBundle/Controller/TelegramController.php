@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller;
+namespace TelegramBundle\Controller;
 
+use AppBundle\Controller\BaseController;
+use MongoDB\BSON\UTCDateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class TelegramController
- * @Route("/telegram")
  */
 class TelegramController extends BaseController
 {
@@ -28,15 +28,20 @@ class TelegramController extends BaseController
         }
 
         $content = $request->getContent();
-        $this->get('logger')->addInfo($content);
-
         $update = json_decode($content);
 
-        $this->get('app.service_telegram.telegram_client')->sendMessage([
-            'chat_id' => $update->message->chat->id,
-            'text' => 'scusa, non so cosa significhi, devo ancora imparare',
-            'reply_to_message_id' => $update->message->message_id
-        ]);
+        $this->get('mongo.connection')
+            ->selectCollection('telegram_webhook_logs')
+            ->insertOne([
+                'logAt' => new UTCDateTime((int)microtime(true)),
+                'update' => $update,
+            ]);
+
+//        $this->get('app.service_telegram.telegram_client')->sendMessage([
+//            'chat_id' => $update->message->chat->id,
+//            'text' => 'scusa, non so cosa significhi, devo ancora imparare',
+//            'reply_to_message_id' => $update->message->message_id
+//        ]);
 
         return new JsonResponse([
             'status' => 200,
