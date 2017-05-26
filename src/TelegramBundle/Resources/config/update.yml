@@ -5,6 +5,19 @@ services:
           - [addHandler, ['@telegram.service_update_handler.authentication_handler']]
           - [addHandler, ['@telegram.service_update_handler.log_handler']]
           - [addHandler, ['@telegram.service_update_handler.decoder_handler']]
+          - [addHandler, ['@telegram.service_update_handler.chat_handler']]
+          - [addHandler, ['@telegram.service_update_handler.command_handler']]
+
+  telegram.service_update_handler.chat_handler:
+      class: TelegramBundle\Service\Update\Handler\ChatHandler
+      arguments: ['@app.service_telegram.telegram_client']
+      calls:
+          - [setPriority, [950]]
+
+  telegram.service_update_handler.command_handler:
+      class: TelegramBundle\Service\Update\Handler\CommandHandler
+      calls:
+          - [setPriority, [960]]
 
   telegram.service_update_handler.authentication_handler:
       class: TelegramBundle\Service\Update\Handler\AuthenticationHandler
@@ -25,3 +38,4 @@ services:
       class: TelegramBundle\Service\Update\Handler\DecoderHandler
       calls:
         - [setPriority, [999]]
+
