@@ -28,7 +28,7 @@ class AuthenticationHandler extends AbstractHandler implements HandlerInterface
 
     public function handle(Request $request, JsonResponse $response, Update $update): bool
     {
-        if (!$this->checkToken($request) || !$this->checkUser($request)) {
+        if (!$this->checkToken($request) || !$this->checkUser($update)) {
             $response->setStatusCode(401);
             $response->setData([
                 'code' => 401,
@@ -46,8 +46,8 @@ class AuthenticationHandler extends AbstractHandler implements HandlerInterface
         return $this->webHookToken === $request->get('token');
     }
 
-    private function checkUser(Request $request): bool
+    private function checkUser(Update $update): bool
     {
-        return true;
+        return 0 < $this->userRepository->getUserByTelegramId($update->getData()->message->from->id);
     }
 }
