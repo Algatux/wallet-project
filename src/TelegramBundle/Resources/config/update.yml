@@ -1,0 +1,27 @@
+services:
+  telegram.service_update.handler:
+      class: TelegramBundle\Service\Update\Handler
+      calls:
+          - [addHandler, ['@telegram.service_update_handler.authentication_handler']]
+          - [addHandler, ['@telegram.service_update_handler.log_handler']]
+          - [addHandler, ['@telegram.service_update_handler.decoder_handler']]
+
+  telegram.service_update_handler.authentication_handler:
+      class: TelegramBundle\Service\Update\Handler\AuthenticationHandler
+      arguments:
+        - '@doctrine.orm.entity_manager'
+        - '%telegram_hook_token%'
+      calls:
+        - [setPriority, [970]]
+
+  telegram.service_update_handler.log_handler:
+      class: TelegramBundle\Service\Update\Handler\LogHandler
+      arguments:
+        - '@telegram.mongo_collection.telegram_webhook_logs'
+      calls:
+        - [setPriority, [980]]
+
+  telegram.service_update_handler.decoder_handler:
+      class: TelegramBundle\Service\Update\Handler\DecoderHandler
+      calls:
+        - [setPriority, [999]]

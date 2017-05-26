@@ -21,7 +21,7 @@ class SetWebHookCommand extends AbstractCommand
 
     protected function configure()
     {
-        $this->setName('telegram:webook:set')
+        $this->setName('telegram:webhook:set')
             ->addArgument(
                 'url',
                 InputArgument::OPTIONAL,

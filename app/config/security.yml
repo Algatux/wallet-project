@@ -18,7 +18,7 @@ security:
             pattern: ^/(_(profiler|wdt|error)|css|images|js)/
             security: false
 
-        webhook:
+        telegram_webhook:
             pattern:  ^/telegram
             security: false
 

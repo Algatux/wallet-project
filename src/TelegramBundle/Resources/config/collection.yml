@@ -1,0 +1,7 @@
+services:
+
+    telegram.mongo_collection.telegram_webhook_logs:
+        class: MongoDB\Collection
+        factory: ['@mongo.connection.wallet', selectCollection]
+        arguments:
+            - telegram_webhook_logs
