@@ -24,15 +24,12 @@ class ChatHandler extends AbstractHandler
             $update->getData()->message->from->first_name
         );
 
-        $this->telegram->sendMessage([
-            'text' => $text,
-            'chat_id' => $update->getData()->message->chat->id
-        ]);
-
         $response->setData([
-            'code' => 200,
-            'message' => 'message sent back'
+            'method' => 'sendMessage',
+            'chat_id' => $update->getData()->message->chat->id,
+            'text' => $text,
         ]);
+        $response->setStatusCode(200);
 
         return false;
     }

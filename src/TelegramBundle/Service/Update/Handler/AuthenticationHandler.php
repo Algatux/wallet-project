@@ -8,12 +8,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use TelegramBundle\Model\Update;
-use TelegramBundle\Service\Update\HandlerInterface;
 
 /**
  * Class AuthenticationHandler.
  */
-class AuthenticationHandler extends AbstractHandler implements HandlerInterface
+class AuthenticationHandler extends AbstractHandler
 {
     /** @var UserRepository */
     private $userRepository;

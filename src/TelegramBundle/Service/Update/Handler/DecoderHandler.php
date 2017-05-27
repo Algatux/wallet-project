@@ -2,19 +2,14 @@
 
 namespace TelegramBundle\Service\Update\Handler;
 
-use MongoDB\BSON\UTCDateTime;
-use MongoDB\Collection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use TelegramBundle\Model\Update;
-use TelegramBundle\Service\Update\HandlerInterface;
 
 /**
  * Class DecoderHandler.
  */
-class DecoderHandler extends AbstractHandler implements HandlerInterface
+class DecoderHandler extends AbstractHandler
 {
     public function handle(Request $request, JsonResponse $response, Update $update): bool
     {

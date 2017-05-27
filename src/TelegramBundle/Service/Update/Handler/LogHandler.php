@@ -7,12 +7,11 @@ use MongoDB\Collection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use TelegramBundle\Model\Update;
-use TelegramBundle\Service\Update\HandlerInterface;
 
 /**
  * Class LogHandler.
  */
-class LogHandler extends AbstractHandler implements HandlerInterface
+class LogHandler extends AbstractHandler
 {
     /** @var Collection */
     private $collection;
@@ -32,7 +31,7 @@ class LogHandler extends AbstractHandler implements HandlerInterface
         $this
             ->collection
             ->insertOne([
-                'logAt' => new UTCDateTime((int)microtime(true)),
+                'logAt' => new UTCDateTime((int)microtime(true) * 1000),
                 'update' => $update->getData(),
             ]);
 
