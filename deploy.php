@@ -28,8 +28,8 @@ server('production', $_dep['server']['address'], $_dep['server']['port'])
  * Copy production parameters yml
  */
 task('config:copy', function () use ($_dep) {
-    run('cp /var/www/shared/config/parameters.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/parameters.yml');
-    run('cp /var/www/shared/config/sentry.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/vendors/sentry.yml');
+    run('cp '.$_dep['server']['shared'].'/parameters.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/parameters.yml');
+    run('cp '.$_dep['server']['shared'].'/sentry.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/vendors/sentry.yml');
 })->desc('Copies parameter yml');
 /**
  * fix permissions
