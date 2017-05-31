@@ -28,9 +28,8 @@ class AuthenticationHandler extends AbstractHandler
     public function handle(Request $request, JsonResponse $response, Update $update): bool
     {
         if (!$this->checkToken($request) || !$this->checkUser($update)) {
-            $response->setStatusCode(401);
+            $response->setStatusCode(200);
             $response->setData([
-                'code' => 401,
                 'error' => 'Access denied, you are not allowed'
             ]);
 

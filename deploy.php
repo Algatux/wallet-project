@@ -28,14 +28,14 @@ server('production', $_dep['server']['address'], $_dep['server']['port'])
  * Copy production parameters yml
  */
 task('config:copy', function () use ($_dep) {
-    run('cp '.$_dep['server']['shared'].'/parameters.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/parameters.yml');
-    run('cp '.$_dep['server']['shared'].'/sentry.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/vendors/sentry.yml');
+    run('cp '.$_dep['server']['shared_path'].'/parameters.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/parameters.yml');
+    run('cp '.$_dep['server']['shared_path'].'/sentry.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/vendors/sentry.yml');
 })->desc('Copies parameter yml');
 /**
  * fix permissions
  */
 task('permissions:fix', function () use ($_dep)  {
-    run('sudo chown -R www-data:www-data '.$_dep['server']['deploy_path'].'/release/*');
+    run('chown -R www-data:www-data '.$_dep['server']['deploy_path'].'/release/*');
     run('sudo chown -R www-data:www-data '.$_dep['server']['deploy_path'].'/shared/var/logs');
     run('sudo chown -R www-data:www-data '.$_dep['server']['deploy_path'].'/shared/var/sessions');
 })->desc('Fixes permissions');
