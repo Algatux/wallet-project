@@ -1,34 +1,35 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace AppBundle\Security;
 
+use AppBundle\Entity\Transaction;
 use AppBundle\Entity\User;
-use AppBundle\Entity\Wallet;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
- * Class WalletVoter
+ * Class TransactionVoter.
  */
-class WalletVoter extends Voter
+class TransactionVoter extends Voter
 {
     /** @var array|string[] */
     private $supportedAttributes = [
-        'TRANSACT',
         'VIEW',
         'EDIT',
         'DELETE'
     ];
 
     /**
+     * Determines if the attribute and subject are supported by this voter.
+     *
      * @param string $attribute An attribute
-     * @param mixed  $subject   The subject to secure, e.g. an object the user wants to access or any other PHP type
+     * @param mixed  $subject The subject to secure, e.g. an object the user wants to access or any other PHP type
      *
      * @return bool True if the attribute and subject are supported, false otherwise
      */
     protected function supports($attribute, $subject)
     {
-        if (!$subject instanceof Wallet) {
+        if (!$subject instanceof Transaction) {
             return false;
         }
 
@@ -40,8 +41,11 @@ class WalletVoter extends Voter
     }
 
     /**
+     * Perform a single access check operation on a given attribute, subject and token.
+     * It is safe to assume that $attribute and $subject already passed the "supports()" method check.
+     *
      * @param string         $attribute
-     * @param Wallet         $subject
+     * @param mixed          $subject
      * @param TokenInterface $token
      *
      * @return bool
@@ -57,11 +61,9 @@ class WalletVoter extends Voter
 
         switch($attribute) {
             case 'VIEW':
-            case 'TRANSACT':
-                return $this->checkViewable($user, $subject);
             case 'EDIT':
             case 'DELETE':
-                return $this->checkOwnership($user, $subject);
+                return $this->checkViewable($user, $subject);
         }
 
         return false;
@@ -69,31 +71,20 @@ class WalletVoter extends Voter
 
     /**
      * @param User   $user
-     * @param Wallet $subject
+     * @param Transaction $subject
      *
      * @return bool
      */
-    private function checkViewable(User $user, Wallet $subject): bool
+    private function checkViewable(User $user, Transaction $subject): bool
     {
         $wallets = $user->getViewableWallets();
 
         foreach ($wallets as $wallet) {
-            if ($wallet->getId() === $subject->getId()) {
+            if ($wallet->getId() === $subject->getWallet()->getId()) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    /**
-     * @param User   $user
-     * @param Wallet $subject
-     *
-     * @return bool
-     */
-    private function checkOwnership(User $user, Wallet $subject): bool
-    {
-        return $user->getId() === $subject->getOwner()->getId();
     }
 }

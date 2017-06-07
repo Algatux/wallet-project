@@ -29,6 +29,8 @@ class TransactionController extends BaseController
      */
     public function addAction(Request $request, Wallet $wallet)
     {
+        $this->denyAccessUnlessGranted('TRANSACT', $wallet);
+
         $transaction = new Transaction();
         $transaction->setTransactedBy($this->getUser());
 
@@ -73,6 +75,8 @@ class TransactionController extends BaseController
      */
     public function removeAction(Transaction $transaction)
     {
+        $this->denyAccessUnlessGranted('DELETE', $transaction);
+
         $redirect = $this->redirectToRoute('app_wallet_detail', ["wallet" => $transaction->getWallet()->getId()]);
 
         $this->getEm()->beginTransaction();
@@ -106,6 +110,8 @@ class TransactionController extends BaseController
      */
     public function downloadAction(Transaction $transaction)
     {
+        $this->denyAccessUnlessGranted('VIEW', $transaction);
+
         $fileContent = $this->get('app.service_storage.transaction_storage')->get($transaction);
 
         $response = new Response();

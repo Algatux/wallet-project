@@ -4,3 +4,9 @@ services:
     tags:
       - { name: security.voter }
     public: false
+
+  app.security.transaction_voter:
+    class: AppBundle\Security\TransactionVoter
+    tags:
+      - { name: security.voter }
+    public: false
