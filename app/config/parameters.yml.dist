@@ -29,3 +29,5 @@ parameters:
     mongodb_database: wallet
     mongodb_user: ~
     mongodb_password: ~
+
+    contact_mail: no-reply@wallet.it
