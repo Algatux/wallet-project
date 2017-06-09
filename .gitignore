@@ -27,3 +27,5 @@
 /web/assets/
 /.idea/
 /deploy_vars.php
+.DS_Store
+Docker/php-fpm/config/id_rsa
