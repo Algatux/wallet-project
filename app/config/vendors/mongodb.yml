@@ -4,13 +4,13 @@ mongo_db_bundle:
     clients:
       wallet:    #choose your client name
         hosts:            # Required - will compose your mongo connection url (mongodb://host1:3062,host2:27017)
-            - { host: %mongodb_host_1%, port: %mongodb_port_1% } # this
-        username:         %mongodb_user%
-        password:         %mongodb_password%
+            - { host: "%mongodb_host_1%", port: "%mongodb_port_1%" } # this
+        username:         "%mongodb_user%"
+        password:         "%mongodb_password%"
         ssl:              false
 
     # connections section, theese represents your Database object reference
     connections:
       wallet:
         client_name:    wallet # Required - your client name in clients section
-        database_name:  %mongodb_database% # Required
+        database_name:  "%mongodb_database%" # Required
