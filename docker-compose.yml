@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  wphp:
+    image: wphp:0.1
+    volumes:
+      - ./:/var/www/wallet
+    tty: true
+    ports:
+      - 0.0.0.0:9000:9000
+    links:
+      - wmaria
+      - wmongo
+    container_name: wallet
+  wapache:
+    image: wapache:0.1
+    hostname: local.dev
+    volumes:
+      - ./:/var/www/wallet
+    ports:
+      - 0.0.0.0:80:80
+    links:
+      - wphp
+  wmaria:
+    image: mariadb:latest
+    hostname: maria.dev
+    ports:
+      - 127.0.0.1:3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: dev-password
+#    volumes:
+#      - /dev/shm/mysql:/var/lib/mysql
+#    command:
+#      - "--sql-mode=NO_ENGINE_SUBSTITUTION,ALLOW_INVALID_DATES"
+  wmongo:
+    image: mongo:3.4.2
+    hostname: mongo.dev
+    ports:
+      - 127.0.0.1:27019:27017
+    entrypoint:
+      - mongod
+      - --quiet
+      - --logpath=/dev/null
