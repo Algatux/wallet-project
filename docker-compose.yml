@@ -28,15 +28,15 @@ services:
       - 127.0.0.1:3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: dev-password
-#    volumes:
-#      - /dev/shm/mysql:/var/lib/mysql
+    volumes:
+      - /Users/alga/var/mariadb:/var/lib/mysql
 #    command:
 #      - "--sql-mode=NO_ENGINE_SUBSTITUTION,ALLOW_INVALID_DATES"
   wmongo:
     image: mongo:3.4.2
     hostname: mongo.dev
     ports:
-      - 127.0.0.1:27019:27017
+      - 127.0.0.1:27017:27017
     entrypoint:
       - mongod
       - --quiet

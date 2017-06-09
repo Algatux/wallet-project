@@ -16,6 +16,7 @@ services:
 
   telegram.service_update_handler.command_handler:
       class: TelegramBundle\Service\Update\Handler\CommandHandler
+      arguments: ['@app.service_telegram.telegram_client']
       calls:
           - [setPriority, [960]]
 

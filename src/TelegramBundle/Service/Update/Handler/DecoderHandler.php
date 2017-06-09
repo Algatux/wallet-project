@@ -15,7 +15,7 @@ class DecoderHandler extends AbstractHandler
     {
         $data = json_decode($request->getContent());
         if (JSON_ERROR_NONE !== json_last_error()) {
-            $response->setStatusCode(400);
+            $response->setStatusCode(200);
             $response->setData([
                 'code' => 400,
                 'error' => 'Bad request: The update is not valid',
