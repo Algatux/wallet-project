@@ -1,43 +1,45 @@
-version: "3"
-
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.1"
 services:
-  wphp:
-    image: wphp:0.1
-    volumes:
-      - ./:/var/www/wallet
-    tty: true
-    ports:
-      - 0.0.0.0:9000:9000
-    links:
-      - wmaria
-      - wmongo
-    container_name: wallet
-  wapache:
-    image: wapache:0.1
-    hostname: local.dev
-    volumes:
-      - ./:/var/www/wallet
-    ports:
-      - 0.0.0.0:80:80
-    links:
-      - wphp
-  wmaria:
-    image: mariadb:latest
-    hostname: maria.dev
-    ports:
-      - 127.0.0.1:3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: dev-password
-    volumes:
-      - /Users/alga/var/mariadb:/var/lib/mysql
-#    command:
-#      - "--sql-mode=NO_ENGINE_SUBSTITUTION,ALLOW_INVALID_DATES"
-  wmongo:
-    image: mongo:3.4.2
-    hostname: mongo.dev
-    ports:
-      - 127.0.0.1:27017:27017
-    entrypoint:
-      - mongod
-      - --quiet
-      - --logpath=/dev/null
+
+    redis:
+      image: redis:alpine
+      container_name: wallet-redis
+
+    mariadb:
+      image: mariadb:10.1
+      container_name: wallet-mariadb
+      working_dir: /application
+      environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=wallet
+        - MYSQL_USER=wallet
+        - MYSQL_PASSWORD=wallet
+
+    webserver:
+      image: nginx:alpine
+      container_name: wallet-webserver
+      working_dir: /application
+      volumes:
+          - .:/application
+          - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "80:80"
+      links:
+       - php-fpm
+
+    php-fpm:
+      build:
+        context: .
+        dockerfile: phpdocker/php-fpm/Dockerfile
+      container_name: wallet-php-fpm
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.0/fpm/conf.d/99-overrides.ini
+
+      links:
+        - mariadb
+        - redis
