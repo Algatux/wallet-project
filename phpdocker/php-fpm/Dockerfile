@@ -18,4 +18,6 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
 		less \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
+RUN usermod -u 1000 www-data
+
 WORKDIR "/application"
