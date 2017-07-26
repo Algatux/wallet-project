@@ -1,16 +1,16 @@
 version: "3.1"
 
 services:
-  php-fpm:
+  php:
     build:
       context: .
-      dockerfile: docker/php-fpm/Dockerfile
+      dockerfile: docker/php/dev/Dockerfile
     volumes:
-        - ./:/var/www/project
+        - ./:/home/php-user/project
     tty: true
     ports:
       - 9000:9000
-    links:
+    depends_on:
       - mysql
       - mongo
     container_name: dev_php
@@ -18,26 +18,24 @@ services:
     image: nginx:1.13.1
     container_name: dev_nginx
     volumes:
-        - .:/var/www/project
+        - .:/home/php-user/project
         - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - "80:80"
-    links:
-     - php-fpm
+      - 80:80
+    depends_on:
+     - php
   mysql:
     image: mysql:5.7.17
-    hostname: mysql.dev
     ports:
-      - 127.0.0.1:3306:3306
+      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: dev-password
     volumes:
       - /dev/shm/mysql:/var/lib/mysql
   mongo:
     image: mongo:3.4.2
-    hostname: mongo.dev
     ports:
-      - 127.0.0.1:27017:27017
+      - 27017:27017
     entrypoint:
       - mongod
       - --quiet

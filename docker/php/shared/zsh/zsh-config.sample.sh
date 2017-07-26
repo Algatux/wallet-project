@@ -49,7 +49,7 @@ plugins=(git symfony2 phing)
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/var/www/project/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/php-user/project/bin"
 
 source $ZSH/oh-my-zsh.sh
 
