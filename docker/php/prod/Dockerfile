@@ -80,7 +80,9 @@ COPY docker/php/prod/etc/php-fpm.conf /usr/local/etc/php-fpm.d/dv-project.conf
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN useradd -m -G sudo,www-data php-user \
-    && chown -R php-user:php-user /home/php-user
+    && chown -R php-user:php-user /home/php-user \
+    && mkdir -p /home/php-user/mysql \
+    && mkdir -p /home/php-user/mongo
 
 USER php-user
 

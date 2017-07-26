@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.3"
 
 services:
   php:
@@ -8,8 +8,6 @@ services:
     volumes:
         - ./:/home/php-user/project
     tty: true
-    ports:
-      - 9000:9000
     depends_on:
       - mysql
       - mongo
@@ -26,17 +24,14 @@ services:
      - php
   mysql:
     image: mysql:5.7.17
-    ports:
-      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: dev-password
     volumes:
-      - /dev/shm/mysql:/var/lib/mysql
+      - /home/php-user/mysql:/var/lib/mysql
   mongo:
     image: mongo:3.4.2
-    ports:
-      - 27017:27017
+    volumes:
+      - /home/php-user/mongo:/data/db
     entrypoint:
       - mongod
-      - --quiet
-      - --logpath=/dev/null
+      - --auth
