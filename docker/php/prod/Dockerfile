@@ -74,23 +74,16 @@ RUN apt-get install -y \
         bower \
         less
 
-COPY docker/php/dev/etc/conf.d/ /usr/local/etc/php/conf.d/
-COPY docker/php/dev/etc/php-fpm.conf /usr/local/etc/php-fpm.d/dv-project.conf
+COPY docker/php/prod/etc/conf.d/ /usr/local/etc/php/conf.d/
+COPY docker/php/prod/etc/php-fpm.conf /usr/local/etc/php-fpm.d/dv-project.conf
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY docker/php/shared/zsh/zsh-config.sample.sh /tmp/zsh-config.sample.sh
-
-RUN useradd -m -G sudo,www-data php-user
+RUN useradd -m -G sudo,www-data php-user \
+    && chown -R php-user:php-user /home/php-user
 
 USER php-user
 
-#RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" \
-#    && cp /tmp/zsh-config.sample.sh /home/php-user/.zshrc \
-#    && sudo rm -f /tmp/zsh-config.sample.sh
-
 WORKDIR /home/php-user/project
-
-ENV SYMFONY_DEPRECATIONS_HELPER="disabled"
 
 EXPOSE 9000
