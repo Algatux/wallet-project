@@ -1,4 +1,4 @@
-FROM php:7.0.16-fpm
+FROM php:7.0.21-fpm
 
 MAINTAINER Alessandro Galli <a.galli85@gmail.com>
 
@@ -17,9 +17,7 @@ RUN apt-get install -y \
         libgmp-dev \
         libicu-dev \
         libmcrypt-dev \
-        libmemcached-dev \
         libpng-dev \
-        libsqlite3-dev \
         libssl-dev \
         libtidy-dev \
         libxml2-dev \
@@ -53,7 +51,6 @@ RUN apt-get install -y \
         mysqli \
         opcache \
         pdo_mysql \
-        pdo_sqlite \
         posix \
         readline \
         session \
@@ -77,17 +74,13 @@ COPY docker/php/dev/etc/php-fpm.conf /usr/local/etc/php-fpm.d/dv-project.conf
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY docker/php/shared/zsh/zsh-config.sample.sh /tmp/zsh-config.sample.sh
-
-RUN useradd -m -G sudo,www-data php-user \
+RUN useradd -m -G sudo,www-data -s /bin/zsh php-user \
     && chown -R php-user:php-user /home/php-user
 
 USER php-user
 
-#RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" \
-#    && cp /tmp/zsh-config.sample.sh /home/php-user/.zshrc \
-#    && sudo rm -f /tmp/zsh-config.sample.sh \
-#    && mkdir -p /home/php-user/project
+RUN git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh \
+    && cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 
 WORKDIR /home/php-user/project
 

@@ -30,8 +30,6 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: dev-password
-    volumes:
-      - /dev/shm/mysql:/var/lib/mysql
   mongo:
     image: mongo:3.4.2
     ports:
