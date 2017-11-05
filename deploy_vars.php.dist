@@ -8,10 +8,11 @@ $_dep = [
         'user' => '',
         'key_pub' => '',
         'key_priv' => '',
-        'key_secret' => '',
+        'key_secret' => '@MI',
         'address' => '',
         'port' => 22,
-        'deploy_path' => ''
+        'deploy_path' => '',
+        'shared_path' => ''
     ]
 
 ];
