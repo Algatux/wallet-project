@@ -45,7 +45,7 @@ class TransactionVoter extends Voter
      * It is safe to assume that $attribute and $subject already passed the "supports()" method check.
      *
      * @param string         $attribute
-     * @param mixed          $subject
+     * @param Transaction    $subject
      * @param TokenInterface $token
      *
      * @return bool
@@ -55,7 +55,7 @@ class TransactionVoter extends Voter
         /** @var User $user */
         $user = $token->getUser();
 
-        if ($subject->getOwner()->getId() === $user->getId()) {
+        if ($subject->getWallet()->getOwner()->getId() === $user->getId()) {
             return true;
         }
 
