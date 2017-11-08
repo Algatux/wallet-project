@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace AppBundle\Form;
 
@@ -78,6 +76,7 @@ class WalletType extends AbstractType
                             $qb->setParameter('ownerId', $owner->getId());
                         }
 
+                        $qb->andWhere('u.hidden = false');
                         $qb->orderBy('u.nickName','ASC');
 
                         return $qb;

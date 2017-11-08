@@ -46,6 +46,12 @@ class User extends BaseUser
      */
     private $viewableWallets;
 
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false, options={"default":false})
+     */
+    private $hidden;
+
     public function __construct()
     {
         parent::__construct();
@@ -182,5 +188,21 @@ class User extends BaseUser
     public function setTelegramId(int $telegramId)
     {
         $this->telegramId = $telegramId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHidden(): bool
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param bool $hidden
+     */
+    public function setHidden(bool $hidden)
+    {
+        $this->hidden = $hidden;
     }
 }
