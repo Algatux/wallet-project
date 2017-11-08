@@ -2,6 +2,7 @@
 
 namespace AppBundle\Model\Chartjs;
 
+use AppBundle\Entity\MonthlyWallet;
 use AppBundle\Entity\Wallet;
 
 /**
@@ -36,8 +37,9 @@ class WalletTotalTrendDataModel
     {
         $labels = [];
         $data = [];
+        /** @var MonthlyWallet $wallet */
         foreach ($wallets as $wallet) {
-            $labels[] = $wallet->getName();
+            $labels[] = $wallet->getReferenceMonth('M y');
             $data[] = abs((int)$wallet->getTransactionsTotalAmount());
         }
 
