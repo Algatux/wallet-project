@@ -3,7 +3,7 @@
 {% block title %}Wallet {{ wallet.name }}{% endblock %}
 
 {% block body %}
-    <h1>Wallet: {{ wallet.name }} - {{ not wallet.settled ? 'not' : '' }} settled</h1>
+    <h1>{{ wallet|wallet_info }} - {{ not wallet.settled ? 'not' : '' }} settled</h1>
 
     <div class="panel panel-primary">
 

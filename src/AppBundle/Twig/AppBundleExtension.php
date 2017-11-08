@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace AppBundle\Twig;
 
+use AppBundle\Entity\MonthlyWallet;
 use AppBundle\Entity\Transaction;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Wallet;
@@ -22,6 +23,7 @@ class AppBundleExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('transaction_type', array($this, 'transactionType')),
             new \Twig_SimpleFilter('wallet_share_name_list', array($this, 'walletShareNameList')),
+            new \Twig_SimpleFilter('wallet_info', array($this, 'walletInfo')),
         );
     }
 
@@ -56,6 +58,15 @@ class AppBundleExtension extends \Twig_Extension
         );
 
         return implode(', ', $names);
+    }
+
+    public function walletInfo(Wallet $wallet): string
+    {
+        if ($wallet instanceof MonthlyWallet) {
+            return $wallet->getReferenceMonth('F Y');
+        }
+
+        return $wallet->getName();
     }
 
     /**

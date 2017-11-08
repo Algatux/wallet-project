@@ -92,7 +92,7 @@ class WalletType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Wallet::class,
+            'data_class' => MonthlyWallet::class,
             'owner' => null,
             'setSettled' => false
         ));
