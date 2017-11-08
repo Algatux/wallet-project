@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\MonthlyWallet;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Wallet;
 use Doctrine\ORM\EntityRepository;
@@ -114,7 +115,7 @@ class WalletType extends AbstractType
     private function retrieveWalletOwner(array $options): User
     {
         /** @var Wallet $wallet */
-        $wallet = $options['data'] ?? new Wallet();
+        $wallet = $options['data'] ?? new MonthlyWallet();
         /** @var User $owner */
         return !$wallet->getOwner() instanceof User ? $options['owner'] : $wallet->getOwner();
     }

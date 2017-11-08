@@ -10,6 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {
     const ALGA = 'alga';
+    const TEST = 'test';
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -19,6 +20,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $this->loadUserAlga($manager);
+        $this->loadUserTest($manager);
 
         $manager->flush();
     }
@@ -40,6 +42,25 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($alga);
 
         $this->addReference(self::ALGA, $alga);
+    }
+
+    /**
+     * @param ObjectManager $manager
+     */
+    private function loadUserTest(ObjectManager $manager)
+    {
+        $paperino = new User();
+        $paperino->setUsername(self::TEST);
+        $paperino->setPlainPassword(self::TEST);
+        $paperino->setNickName('test');
+        $paperino->setFirstName('Paolino');
+        $paperino->setLastName('Paperino');
+        $paperino->setEmail('pp@duck.com');
+        $paperino->setEnabled(true);
+
+        $manager->persist($paperino);
+
+        $this->addReference(self::TEST, $paperino);
     }
 
     /**

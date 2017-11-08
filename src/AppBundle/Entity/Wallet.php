@@ -10,14 +10,19 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Wallet
- *
  * @ORM\Table(name="wallet")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\WalletRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string", length=20)
+ * @ORM\DiscriminatorMap({
+ *      "type_monthly" = "AppBundle\Entity\MonthlyWallet",
+ * })
  */
-class Wallet implements TimeblameableInterface
+abstract class Wallet implements TimeblameableInterface
 {
     use TimeblameableEntity;
+
+    const TYPE_MONTH = 'month';
 
     /**
      * @var int

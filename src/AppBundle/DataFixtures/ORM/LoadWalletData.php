@@ -2,7 +2,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Wallet;
+use AppBundle\Entity\MonthlyWallet;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -27,7 +27,7 @@ class LoadWalletData extends AbstractFixture implements OrderedFixtureInterface
      */
     private function loadWalletAlga(ObjectManager $manager)
     {
-        $wallet = new Wallet();
+        $wallet = new MonthlyWallet();
         $wallet->setName(self::WALLET_ALGA);
         $wallet->setDescription('test wallet');
         $wallet->setOwner($this->getReference(LoadUserData::ALGA));

@@ -21,12 +21,9 @@ host('production')
     ->set('deploy_path', $_dep['server']['deploy_path'])
     ->port($_dep['server']['port'])
     ->user($_dep['server']['user'])
-    ->identityFile($_dep['server']['key_pub'], $_dep['server']['key_priv'], $_dep['server']['key_secret'])
-;
+    ->identityFile($_dep['server']['key_pub'], $_dep['server']['key_priv'], $_dep['server']['key_secret']);
 
-/**
- * Copy production parameters yml
- */
+/** Copy production parameters yml */
 task('config:copy', function () use ($_dep) {
     run('cp '.$_dep['server']['shared_path'].'/parameters.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/parameters.yml');
     run('cp '.$_dep['server']['shared_path'].'/sentry.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/vendors/sentry.yml');
@@ -47,8 +44,13 @@ task('clear:cache', function () use ($_dep)  {
     run('{{bin/php}} {{bin/console}} cache:clear {{console_options}}');
 })->desc('Cleares symfony cache!');
 
+/** db migrations! */
+task('db:migrations', function () use ($_dep)  {
+    run('{{bin/php}} {{bin/console}} doctrine:migrations:migrate {{console_options}}');
+})->desc('Applies database migrations!');
+
 before('deploy:vendors', 'config:copy');
-//after('config:copy', 'permissions:fix');
 after('deploy:vendors', 'assets:dump');
 before('deploy:cache:warmup', 'clear:cache');
 before('assets:dump', 'bower:install');
+after('assets:dump', 'db:migrations');
