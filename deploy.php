@@ -54,4 +54,4 @@ before('deploy:vendors', 'config:copy');
 after('deploy:vendors', 'assets:dump');
 before('deploy:cache:warmup', 'clear:cache');
 before('assets:dump', 'bower:install');
-after('assets:dump', 'db:migrations');
+after('deploy:cache:warmup', 'db:migrations');
