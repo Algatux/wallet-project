@@ -42,6 +42,9 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new Liip\FunctionalTestBundle\LiipFunctionalTestBundle();
             $bundles[] = new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+        }
+
+        if (in_array($this->getEnvironment(), ['dev', 'build'], true)) {
             $bundles[] = new \Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle();
         }
 

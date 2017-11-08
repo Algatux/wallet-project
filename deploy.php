@@ -8,6 +8,7 @@ require 'recipe/symfony3.php';
 require './deploy_vars.php';
 
 // Set configurations
+set('symfony_env', 'build');
 set('ssh_type', 'native');
 set('ssh_multiplexing', true);
 set('repository', $_dep['repository']);
