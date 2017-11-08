@@ -30,11 +30,6 @@ set('console_options', function () {
     return !in_array(get('symfony_env'), ['prod', 'build']) ? $options : sprintf('%s --no-debug', $options);
 });
 
-task('deploy:env', function(){
-    $env = get('symfony_env');
-    writeln("✈︎ Environment $env with console options <fg=cyan>\"{{console_options}}\"</fg=cyan>");
-});
-
 /** Copy production parameters yml */
 task('deploy:config:copy', function () use ($_dep) {
     run('cp '.$_dep['server']['shared_path'].'/parameters.yml.wallet-backend '.$_dep['server']['deploy_path'].'/release/app/config/parameters.yml');
@@ -68,12 +63,31 @@ task('database:migrate', function () use ($_dep)  {
     set('symfony_env', 'prod');
 })->desc('Applies database migrations!');
 
+/** cleaning unusefull files! */
+task('clean:unuseful', function () use ($_dep)  {
+    run(sprintf('rm -rf %s', implode(' ', [
+        $_dep['server']['deploy_path'].'/release/var/cache/build',
+        $_dep['server']['deploy_path'].'/release/var/SymfonyRequirements.php',
+        $_dep['server']['deploy_path'].'/release/app/config/*_dev.*',
+        $_dep['server']['deploy_path'].'/release/app/config/*_test.*',
+        $_dep['server']['deploy_path'].'/release/app/config/*_build.*',
+        $_dep['server']['deploy_path'].'/release/app/config/parameters.yml.dist',
+        $_dep['server']['deploy_path'].'/release/tests',
+        $_dep['server']['deploy_path'].'/release/docker',
+        $_dep['server']['deploy_path'].'/release/deploy.php',
+        $_dep['server']['deploy_path'].'/release/deploy_vars.php.dist',
+        $_dep['server']['deploy_path'].'/release/docker-compose*.yml',
+        $_dep['server']['deploy_path'].'/release/phpunit.xml.dist',
+        $_dep['server']['deploy_path'].'/release/setup.sh',
+        $_dep['server']['deploy_path'].'/release/start.sh'
+    ])));
+})->desc('Cleanses unuseful files!');
+
 /**
  * Main task
  */
 task('deploy', [
     'deploy:info',
-    'deploy:env',
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
@@ -91,6 +105,7 @@ task('deploy', [
     'deploy:cache:clear',
     'deploy:writable',
     'deploy:cache:warmup',
+    'clean:unuseful',
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
