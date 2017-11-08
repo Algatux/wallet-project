@@ -51,7 +51,7 @@ task('db:migrations', function () use ($_dep)  {
 })->desc('Applies database migrations!');
 
 before('deploy:vendors', 'config:copy');
-after('deploy:vendors', 'assets:dump');
-before('deploy:cache:warmup', 'clear:cache');
-before('assets:dump', 'bower:install');
+//after('deploy:vendors', 'assets:dump');
+//before('deploy:cache:warmup', 'clear:cache');
+after('deploy:vendors', 'bower:install');
 after('deploy:assetic:dump', 'db:migrations');
