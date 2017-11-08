@@ -33,7 +33,7 @@
         "symfony/assetic-bundle": "^2.8",
         "twbs/bootstrap": "^3.0",
         "bmatzner/fontawesome-bundle": "^4.0",
-        "sentry/sentry-symfony": "^0.6",
+        "sentry/sentry-symfony": "^1.0",
         "oneup/flysystem-bundle": "^1.0",
         "facile-it/paginator-bundle": "^1.0",
         "irazasyed/telegram-bot-sdk": "^2.0",
