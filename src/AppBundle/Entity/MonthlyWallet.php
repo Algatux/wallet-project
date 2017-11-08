@@ -10,12 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class MonthlyWallet extends Wallet
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->setReferenceMonth(date('ym'));
-    }
-
     /**
      * @var string
      *
@@ -24,6 +18,12 @@ class MonthlyWallet extends Wallet
      * @Assert\Length(min = 4, max = 4)
      */
     private $referenceMonth;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setReferenceMonth(date('ym'));
+    }
 
     public function getReferenceMonth(string $format = null): string
     {
