@@ -8,7 +8,6 @@ require 'recipe/symfony3.php';
 require './deploy_vars.php';
 
 // Set configurations
-set('symfony_env', 'build');
 set('ssh_type', 'native');
 set('ssh_multiplexing', true);
 set('repository', $_dep['repository']);
@@ -23,6 +22,18 @@ host('production')
     ->port($_dep['server']['port'])
     ->user($_dep['server']['user'])
     ->identityFile($_dep['server']['key_pub'], $_dep['server']['key_priv'], $_dep['server']['key_secret']);
+
+
+// Symfony console opts
+set('console_options', function () {
+    $options = '--no-interaction --env={{symfony_env}}';
+    return !in_array(get('symfony_env'), ['prod', 'build']) ? $options : sprintf('%s --no-debug', $options);
+});
+
+task('deploy:env', function(){
+    $env = get('symfony_env');
+    writeln("✈︎ Environment $env with console options <fg=cyan>\"{{console_options}}\"</fg=cyan>");
+});
 
 /** Copy production parameters yml */
 task('deploy:config:copy', function () use ($_dep) {
@@ -52,7 +63,9 @@ task('deploy:cache:warmup', function () use ($_dep)  {
 
 /** db migrations! */
 task('database:migrate', function () use ($_dep)  {
+    set('symfony_env', 'build');
     run('{{bin/php}} {{bin/console}} doctrine:migrations:migrate {{console_options}}');
+    set('symfony_env', 'prod');
 })->desc('Applies database migrations!');
 
 /**
@@ -60,6 +73,7 @@ task('database:migrate', function () use ($_dep)  {
  */
 task('deploy', [
     'deploy:info',
+    'deploy:env',
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
@@ -82,8 +96,3 @@ task('deploy', [
     'cleanup',
 ])->desc('Deploy your project');
 
-//before('deploy:vendors', 'config:copy');
-//after('deploy:vendors', 'assets:dump');
-//before('deploy:cache:warmup', 'clear:cache');
-//before('assets:dump', 'bower:install');
-//after('deploy:assetic:dump', 'db:migrations');
