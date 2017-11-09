@@ -56,6 +56,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->viewableWallets = new ArrayCollection();
+        $this->hidden = false;
     }
 
     /**
