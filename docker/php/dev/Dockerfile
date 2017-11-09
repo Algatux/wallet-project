@@ -61,13 +61,14 @@ RUN apt-get install -y \
         xsl \
         zip \
     && CFLAGS="-I/usr/src/php" docker-php-ext-install -j5 xmlreader \
-    && pecl install \
-        mongodb-1.2.9 \
-    && docker-php-ext-enable \
-        mongodb \
     && npm install -g \
-        bower \
-        less
+            bower \
+            less
+
+RUN pecl install \
+        mongodb-1.3.0 \
+    && docker-php-ext-enable \
+        mongodb
 
 COPY docker/php/dev/etc/conf.d/ /usr/local/etc/php/conf.d/
 COPY docker/php/dev/etc/php-fpm.conf /usr/local/etc/php-fpm.d/dv-project.conf
