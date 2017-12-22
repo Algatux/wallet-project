@@ -18,16 +18,13 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
 
             // THIRD PARTY
-            new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
-            new Bmatzner\FontAwesomeBundle\BmatznerFontAwesomeBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Sentry\SentryBundle\SentryBundle(),
             new Oneup\FlysystemBundle\OneupFlysystemBundle(),
-            new Facile\PaginatorBundle\FacilePaginatorBundle(),
             new Facile\MongoDbBundle\FacileMongoDbBundle(),
+            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
 
             // APP BUNDLES
             new AppBundle\AppBundle(),

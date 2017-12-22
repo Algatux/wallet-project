@@ -5,28 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    {% block stylesheets %}
-        {% stylesheets '@bootstrap_css' '@fontawesome_css' %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-    {% endblock %}
-
-    <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
-    {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
 </head>
 
 <body>
-    {% include('::partial/_navbar.html.twig') %}
-    <div class="container">
-        {% include('::partial/_flashMessages.html.twig') %}
-        {% block body %}{% endblock %}
-    </div>
-
-    {% block javascripts %}
-        {% javascripts '@jquery' '@bootstrap_js' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    {% endblock %}
+{% block body %}{% endblock %}
 </body>
 </html>
-

@@ -4,9 +4,9 @@ imports:
     - { resource: vendors/doctrine.yml }
     - { resource: vendors/mongodb.yml }
     - { resource: vendors/fos.yml }
-    - { resource: vendors/assetic.yml }
     - { resource: vendors/sentry.yml }
     - { resource: vendors/flysystem.yml }
+    - { resource: vendors/jwt.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration

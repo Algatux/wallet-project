@@ -19,8 +19,6 @@ parameters:
     telegram_group_id: null
     telegram_hook_token: null
 
-    node_path : /usr/
-
     mongodb_host_1: mongo
     mongodb_port_1: 27017
     mongodb_database: wallet
@@ -28,3 +26,9 @@ parameters:
     mongodb_password: null
 
     contact_mail: no-reply@wallet.it
+
+    # JWT
+    jwt_private_key_path: ''
+    jwt_public_key_path: ''
+    jwt_key_pass_phrase: 'wallet'
+    jwt_token_ttl: ''

@@ -3,21 +3,24 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Class DefaultController
- */
+
 class DefaultController extends Controller
 {
     /**
      * @Route("/", name="app_homepage")
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Template()
      */
     public function indexAction()
     {
-        return $this->redirectToRoute('app_wallet_list');
+    }
+
+    /**
+     * @Route("/api/login", name="app_login")
+     */
+    public function loginAction()
+    {
     }
 }

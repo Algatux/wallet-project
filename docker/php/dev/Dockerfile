@@ -5,7 +5,6 @@ MAINTAINER Alessandro Galli <a.galli85@gmail.com>
 RUN apt-get update \
     && apt-get install -y software-properties-common apt-transport-https \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv 68576280 \
-    && apt-add-repository 'deb https://deb.nodesource.com/node_6.x jessie main' \
     && apt-get update \
     && export DEBIAN_FRONTEND=noninteractive
 
@@ -27,7 +26,6 @@ RUN apt-get install -y \
         zsh \
         git \
         bzip2 \
-        nodejs \
         ssh \
         openssl \
     && apt-get clean \
@@ -60,10 +58,7 @@ RUN apt-get install -y \
         xmlrpc \
         xsl \
         zip \
-    && CFLAGS="-I/usr/src/php" docker-php-ext-install -j5 xmlreader \
-    && npm install -g \
-            bower \
-            less
+    && CFLAGS="-I/usr/src/php" docker-php-ext-install -j5 xmlreader
 
 RUN pecl install \
         mongodb-1.3.0 \
@@ -84,7 +79,5 @@ RUN git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh \
     && cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 
 WORKDIR /home/php-user/project
-
-ENV SYMFONY_DEPRECATIONS_HELPER="disabled"
 
 EXPOSE 9000
