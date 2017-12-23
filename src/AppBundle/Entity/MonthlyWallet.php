@@ -41,4 +41,14 @@ class MonthlyWallet extends Wallet
     {
         $this->referenceMonth = $referenceMonth;
     }
+
+    public function jsonSerialize()
+    {
+        return array_merge(
+            parent::jsonSerialize(),
+            [
+            'refMonth' => $this->referenceMonth,
+            ]
+        );
+    }
 }

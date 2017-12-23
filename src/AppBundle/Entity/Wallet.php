@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "type_monthly" = "AppBundle\Entity\MonthlyWallet",
  * })
  */
-abstract class Wallet implements TimeblameableInterface
+abstract class Wallet implements TimeblameableInterface, \JsonSerializable
 {
     use TimeblameableEntity;
 
@@ -229,5 +229,19 @@ abstract class Wallet implements TimeblameableInterface
             $this->sharedWith->removeElement($user);
             $user->removeViewableWallet($this);
         }
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'settled' => $this->isSettled(),
+            'transactions' => $this->getTransactions()->map(function(Transaction $transaction){ return $transaction->getId(); })->toArray(),
+            'totalAmount' => $this->getTransactionsTotalAmount(),
+            'owner' => $this->getOwner()->getId(),
+            'sharedWith' => $this->getSharedWith()->map(function(User $user){ return $user->getId(); })->toArray()
+        ];
     }
 }

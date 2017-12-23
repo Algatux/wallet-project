@@ -13,8 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class WalletController
- * @Route("/api/wallet")
+ * @Route("/wallet/old")
  */
 class WalletController extends BaseController
 {
@@ -47,14 +46,6 @@ class WalletController extends BaseController
             "wallets" => $wallets,
             "trendModel" => $trendModel
         ];
-    }
-
-    /**
-     * @Route("/test", name="app_wallet_list")
-     */
-    public function testAction()
-    {
-        return new JsonResponse(['test' => 'ok']);
     }
 
     /**

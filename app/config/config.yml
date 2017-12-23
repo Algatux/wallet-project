@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: services.yml }
     - { resource: security.yml }
     - { resource: vendors/doctrine.yml }
     - { resource: vendors/mongodb.yml }

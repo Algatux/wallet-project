@@ -22,24 +22,27 @@ security:
             pattern:  ^/telegram
             security: false
 
-        login:
-            pattern:  ^/api/login
+        api_login:
+            pattern: ^/api/login$
             stateless: true
             anonymous: true
             form_login:
-                check_path:               /api/login_check
-                success_handler:          lexik_jwt_authentication.handler.authentication_success
-                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                provider: fos_userbundle
+                check_path: api_jwt_login
                 require_previous_session: false
+                username_parameter: username
+                password_parameter: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                remember_me: false
+                post_only: true
 
-        api:
-            pattern:   ^/api
+        api_protected:
+            pattern: ^/api
             stateless: true
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
-            provider: fos_userbundle
-
 
         main:
             pattern: ^/

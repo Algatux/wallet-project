@@ -1,11 +1,11 @@
 services:
 
   #TWIG
-  app.twig_extension:
-    class: AppBundle\Twig\AppBundleExtension
-    public: false
-    tags:
-      - { name: twig.extension }
+#  app.twig_extension:
+#    class: AppBundle\Twig\AppBundleExtension
+#    public: false
+#    tags:
+#      - { name: twig.extension }
 
   # APPLICATION SERVICES
   app.service_wallet.wallet_persister:
