@@ -2,9 +2,7 @@ version: "3.3"
 
 services:
   php:
-    build:
-      context: .
-      dockerfile: docker/php/dev/Dockerfile
+    image: algatux/php-fpm-mongo:1.0
     volumes:
         - ./:/home/php-user/project
     tty: true
