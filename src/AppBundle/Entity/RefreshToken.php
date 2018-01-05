@@ -7,7 +7,9 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="refresh_token")
+ * @ORM\Table(name="refresh_token", uniqueConstraints={
+ *     @ORM\UniqueConstraint(name="token_idx", columns={"token"})
+ * })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RefreshTokenRepository")
  */
 class RefreshToken implements \JsonSerializable

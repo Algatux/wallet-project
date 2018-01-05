@@ -7,6 +7,7 @@ use AppBundle\Model\ApiResponses\ApiResponse;
 use AppBundle\Repository\RefreshTokenRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use Ramsey\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -43,8 +44,14 @@ class AuthController extends Controller
             throw new \LogicException('more than one tokens where found');
         }
 
-        if ( $token instanceof RefreshToken ) {
-            return new ApiResponse($token);
+        if ( !$token instanceof RefreshToken ) {
+            $token = new RefreshToken();
+            $token->setToken(Uuid::uuid4()->toString());
+
+            $this->entityManager->persist($token);
+            $this->entityManager->flush();
         }
+
+        return new ApiResponse($token);
     }
 }
