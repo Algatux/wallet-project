@@ -28,7 +28,7 @@ parameters:
     contact_mail: no-reply@wallet.it
 
     # JWT
-    jwt_private_key_path: ''
-    jwt_public_key_path: ''
+    jwt_private_key_path: '%kernel.root_dir%/../var/certs/jwt/private.pem'
+    jwt_public_key_path: '%kernel.root_dir%/../var/certs/jwt/public.pem'
     jwt_key_pass_phrase: 'wallet'
-    jwt_token_ttl: ''
+    jwt_token_ttl: 3600
