@@ -83,6 +83,11 @@ task('clean:unuseful', function () use ($_dep)  {
     ])));
 })->desc('Cleanses unuseful files!');
 
+/** docker restart! */
+task('docker:restart', function () use ($_dep)  {
+    run('docker-compose restart -f docker-compose-prod.yml');
+})->desc('Restart docker php containers!');
+
 /**
  * Main task
  */
@@ -109,5 +114,6 @@ task('deploy', [
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
+    'docker:restart',
 ])->desc('Deploy your project');
 

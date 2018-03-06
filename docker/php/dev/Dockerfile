@@ -1,14 +1,14 @@
-FROM php:7.0.21-fpm
+FROM php:7.2-fpm
 
 MAINTAINER Alessandro Galli <a.galli85@gmail.com>
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update \
-    && apt-get install -y software-properties-common apt-transport-https \
+    && apt-get install -y software-properties-common apt-transport-https gnupg sudo \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv 68576280 \
     && apt-get update \
-    && export DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get install -y \
+    && apt-get install -y \
         libbz2-dev \
         libcurl4-openssl-dev \
         libedit-dev \
@@ -28,7 +28,8 @@ RUN apt-get install -y \
         bzip2 \
         ssh \
         openssl \
-    && apt-get clean \
+    && apt-get autoclean \
+    && apt-get autoremove \
     && docker-php-ext-install -j5 \
         bcmath \
         bz2 \
@@ -45,7 +46,6 @@ RUN apt-get install -y \
         intl \
         json \
         mbstring \
-        mcrypt \
         mysqli \
         opcache \
         pdo_mysql \
@@ -65,8 +65,8 @@ RUN pecl install \
     && docker-php-ext-enable \
         mongodb
 
-COPY docker/php/dev/etc/conf.d/ /usr/local/etc/php/conf.d/
-COPY docker/php/dev/etc/php-fpm.conf /usr/local/etc/php-fpm.d/dv-project.conf
+COPY etc/conf.d /usr/local/etc/php/conf.d
+COPY etc/php-fpm.conf /usr/local/etc/php-fpm.d/dv-project.conf
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

@@ -1,8 +1,8 @@
-version: "3.3"
+version: "3.4"
 
 services:
   php:
-    image: algatux/php-fpm-mongo:1.0
+    image: algatux/php-fpm-mongo:1.1
     volumes:
         - ./:/home/php-user/project
     tty: true
