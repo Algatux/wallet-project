@@ -105,8 +105,6 @@ task('deploy', [
     'deploy:vendors',
     'database:migrate',
     'deploy:assets:install',
-    'deploy:bower:install',
-    'deploy:assetic:dump',
     'deploy:cache:clear',
     'deploy:writable',
     'deploy:cache:warmup',

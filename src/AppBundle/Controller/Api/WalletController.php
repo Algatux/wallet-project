@@ -4,14 +4,12 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Wallet;
 use AppBundle\Repository\WalletRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @Route("/api/wallet")
@@ -23,7 +21,7 @@ class WalletController extends AbstractController
     /** @var TokenStorageInterface */
     private $tokenStorage;
 
-    public function __construct(EntityManager $entityManager, TokenStorage $tokenStorage)
+    public function __construct(EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage)
     {
         $this->entityManager = $entityManager;
         $this->tokenStorage = $tokenStorage;
