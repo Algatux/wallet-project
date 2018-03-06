@@ -1,0 +1,27 @@
+services:
+
+  #TWIG
+#  app.twig_extension:
+#    class: App\Twig\AppExtension
+#    public: false
+#    tags:
+#      - { name: twig.extension }
+
+  # APPLICATION SERVICES
+  app.service_wallet.wallet_persister:
+    class: App\Service\Wallet\WalletPersister
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@event_dispatcher'
+
+  app.service_transaction.transaction_persister:
+    class: App\Service\Transaction\TransactionPersister
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@event_dispatcher'
+
+  # STORAGES
+  app.service_storage.transaction_storage:
+    class: App\Service\Storage\TransactionStorage
+    arguments:
+      - '@oneup_flysystem.transactions_filesystem'

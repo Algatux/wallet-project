@@ -1,0 +1,12 @@
+services:
+
+  app.entity_subscriber.timeblameable_subscriber:
+      class: App\Entity\Subscriber\TimeblameableSubscriber
+      arguments: ['@security.token_storage']
+      tags:
+
+  app.entity_subscriber.transaction_subscriber:
+      class: App\Entity\Subscriber\TransactionSubscriber
+      arguments: ['@app.service_storage.transaction_storage']
+      tags:
+        - { name: doctrine.event_subscriber }

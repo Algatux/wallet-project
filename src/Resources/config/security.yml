@@ -1,0 +1,12 @@
+services:
+  app.security.wallet_voter:
+    class: App\Security\WalletVoter
+    tags:
+      - { name: security.voter }
+    public: false
+
+  app.security.transaction_voter:
+    class: App\Security\TransactionVoter
+    tags:
+      - { name: security.voter }
+    public: false

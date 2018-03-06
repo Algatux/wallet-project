@@ -3,5 +3,5 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\User
     from_email:
-      address: "%contact_mail%"
-      sender_name: "%contact_mail%"
+      address: ""
+      sender_name: ""

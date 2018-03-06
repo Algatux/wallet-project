@@ -1,0 +1,22 @@
+services:
+
+  app.event_listener.transaction_listener:
+    class: App\Event\Listener\TransactionListener
+    arguments:
+      - '@app.service_telegram.telegram_client'
+      - '%telegram_group_id%'
+    tags:
+      - { name: kernel.event_listener, event: event.transaction.created, method: onTransactionCreated }
+
+  facile_cbr_api.listener.jwt_token_created_decorator_listener:
+      class: App\Event\Listener\JwtTokenDecoratorListener
+      tags:
+        - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onTokenCreated }
+
+  facile_cbr_api.listener.jwt_authentication_error_listener:
+      class: App\Event\Listener\JwtAuthenticationErrorListener
+      tags:
+        - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_failure, method: onAuthenticationFailure }
+        - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_invalid, method: onJWTInvalidOrExpired }
+        - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_not_found, method: onJWTNotFound }
+        - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_expired, method: onJWTInvalidOrExpired }

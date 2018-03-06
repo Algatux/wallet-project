@@ -1,0 +1,17 @@
+mongo_db_bundle:
+    data_collection: true # set to false to disable data collection
+    # clients section, here you can define connection to different servers or with different credentials
+    clients:
+      wallet:    #choose your client name
+        hosts:            # Required - will compose your mongo connection url (mongodb://host1:3062,host2:27017)
+            #- { host: '%env(resolve:MONGODB_HOST)%', port: '%env(int:MONGODB_PORT)%' } # this
+            - { host: '%env(resolve:MONGODB_HOST)%', port: 27017 } # this
+        username: "%env(resolve:MONGODB_USER)%"
+        password: "%env(resolve:MONGODB_PASSWORD)%"
+        ssl:  false
+
+    # connections section, theese represents your Database object reference
+    connections:
+      wallet:
+        client_name:    wallet # Required - your client name in clients section
+        database_name:  "%env(resolve:MONGODB_DATABASE)%" # Required

@@ -1,0 +1,62 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Storage;
+
+use App\Entity\Contracts\FileAwareInterface;
+use App\Entity\Transaction;
+use League\Flysystem\Filesystem;
+
+/**
+ * Class TransactionStorage
+ */
+class TransactionStorage
+{
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
+
+    /**
+     * TransactionStorage constructor.
+     *
+     * @param Filesystem $filesystem
+     */
+    public function __construct(Filesystem $filesystem)
+    {
+        $this->filesystem = $filesystem;
+    }
+
+    /**
+     * @param FileAwareInterface $entity
+     *
+     * @return string
+     */
+    public function get(FileAwareInterface $entity): string
+    {
+        $fileContent = $this->filesystem->read($entity->getFilename());
+
+        return is_string($fileContent) ? $fileContent : '';
+    }
+
+    /**
+     * @param Transaction|FileAwareInterface $entity
+     *
+     * @return bool
+     */
+    public function save(FileAwareInterface $entity): bool
+    {
+        return $this->filesystem->write($entity->getFilename(), $entity->getFileContent());
+    }
+
+    /**
+     * @param Transaction|FileAwareInterface $entity
+     *
+     * @return bool
+     */
+    public function delete(FileAwareInterface $entity): bool
+    {
+        return $this->filesystem->delete($entity->getFilename());
+    }
+}
