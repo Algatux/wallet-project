@@ -1,23 +1,21 @@
-version: "3.3"
+version: "3.4"
 
 services:
   php:
-    build:
-      context: .
-      dockerfile: docker/php/prod/Dockerfile
+    image: algatux/php-fpm-mongo:prod-1.2
     volumes:
         - ./:/home/php-user/project
     tty: true
     depends_on:
       - mysql
       - mongo
-    container_name: prod_php
+    container_name: dev_php
   nginx:
-    image: nginx:1.13.1
-    container_name: prod_nginx
+    image: nginx:1.13
+    container_name: nginx
     volumes:
         - .:/home/php-user/project
-        - ./docker/nginx/prod/nginx.conf:/etc/nginx/conf.d/default.conf
+        - ./docker/nginx/dev/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 80:80
     depends_on:
@@ -27,11 +25,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: dev-password
     volumes:
-      - /home/php-user/mysql:/var/lib/mysql
+      - /var/docker/mysql:/var/lib/mysql
   mongo:
     image: mongo:3.4.2
     volumes:
-      - /home/php-user/mongo:/data/db
+      - /var/docker/mongo:/data/db
     entrypoint:
       - mongod
-      - --auth
+      - --storageEngine=wiredTiger
+      - --bind_ip_all
