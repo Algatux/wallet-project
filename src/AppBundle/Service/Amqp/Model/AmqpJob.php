@@ -2,7 +2,9 @@
 
 namespace AppBundle\Service\Amqp\Model;
 
-class AmqpJob
+use Symfony\Component\Validator\Constraints\Uuid;
+
+class AmqpJob implements \JsonSerializable
 {
     const ROUTING_KEY_DEFAULT = '';
 
@@ -20,5 +22,12 @@ class AmqpJob
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'payload' => $this->data
+        ];
     }
 }

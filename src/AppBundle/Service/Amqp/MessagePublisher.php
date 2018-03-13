@@ -4,6 +4,7 @@ namespace AppBundle\Service\Amqp;
 
 use AppBundle\Service\Amqp\Model\AmqpJob;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class MessagePublisher
 {
@@ -41,5 +42,20 @@ class MessagePublisher
             $this->password,
             $this->vHost
         );
+
+        $payload = array_merge(['id' => uniqid()], $job->getData());
+        $message = new AMQPMessage(
+            json_encode($payload),
+            [
+                'content_type' => 'application/json',
+                'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
+            ]
+        );
+
+        $channel = $conn->channel();
+        $channel->exchange_declare($this->exchange, 'direct', true, true, false);
+        $channel->basic_publish($message, $this->exchange, $routingKey);
+
+        $conn->close();
     }
 }
