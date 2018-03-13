@@ -33,8 +33,6 @@ RUN apt-get update \
         nodejs \
         ssh \
         openssl \
-    && apt-get autoclean \
-    && apt-get autoremove \
     && docker-php-ext-install -j5 \
         bcmath \
         bz2 \
@@ -71,7 +69,11 @@ RUN apt-get update \
         mongodb \
     && npm install -g \
         bower \
-        less
+        less \
+    && apt-get autoclean \
+    && apt-get autoremove \
+    && pecl clear-cache \
+    && docker-php-source delete
 
 COPY etc/php-fpm.conf /usr/local/etc/php-fpm.d/dv-project.conf
 

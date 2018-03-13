@@ -1,0 +1,19 @@
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:       '%rabbitmq_host%'
+            port:       '%rabbitmq_port%'
+            user:       '%rabbitmq_user%'
+            password:   '%rabbitmq_pass%'
+            lazy:       true
+            heartbeat:  45
+            connection_timeout: 3
+            read_write_timeout: 90
+            vhost:      '%rabbitmq_vhost%'
+    consumers:
+        jobs:
+            connection:       default
+            exchange_options: {name: '%rabbitmq_jobs_x_name%', type: direct}
+            queue_options:    {name: '%rabbitmq_jobs_q_name%' }
+            callback:         app.amqp.fake_consumer
+            qos_options:      {prefetch_count: 1}

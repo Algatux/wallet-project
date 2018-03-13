@@ -1,0 +1,4 @@
+services:
+
+    app.amqp.fake_consumer:
+      class: AppBundle\Service\Amqp\FakeConsumer

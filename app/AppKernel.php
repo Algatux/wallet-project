@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new Oneup\FlysystemBundle\OneupFlysystemBundle(),
             new Facile\PaginatorBundle\FacilePaginatorBundle(),
             new Facile\MongoDbBundle\FacileMongoDbBundle(),
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
 
             // APP BUNDLES
             new AppBundle\AppBundle(),

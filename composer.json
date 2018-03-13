@@ -38,7 +38,8 @@
         "facile-it/paginator-bundle": "^1.0",
         "irazasyed/telegram-bot-sdk": "^2.0",
         "facile-it/mongodb-bundle": "^0.4",
-        "doctrine/doctrine-migrations-bundle": "^1.3"
+        "doctrine/doctrine-migrations-bundle": "^1.3",
+        "php-amqplib/rabbitmq-bundle": "^1.14"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
