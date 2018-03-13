@@ -24,5 +24,6 @@ class AppBundleExtension extends Extension
         $loader->load('doctrine.yml');
         $loader->load('telegram.yml');
         $loader->load('listeners.yml');
+        $loader->load('amqp.yml');
     }
 }

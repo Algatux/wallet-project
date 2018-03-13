@@ -26,7 +26,7 @@ parameters:
     mongodb_password: null
 
     # RABBITMQ
-    rabbitmq_host: localhost
+    rabbitmq_host: rabbit
     rabbitmq_port: 5672
     rabbitmq_user: 'guest'
     rabbitmq_pass: 'guest'
