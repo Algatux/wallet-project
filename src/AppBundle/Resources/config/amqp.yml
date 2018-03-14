@@ -2,3 +2,21 @@ services:
 
     app.amqp.fake_consumer:
       class: AppBundle\Service\Amqp\FakeConsumer
+
+    app.amqp.message_publisher:
+      class: AppBundle\Service\Amqp\MessagePublisher
+      arguments:
+        - '%rabbitmq_host%'
+        - '%rabbitmq_port%'
+        - '%rabbitmq_user%'
+        - '%rabbitmq_pass%'
+        - '%rabbitmq_vhost%'
+        - 'wallet'
+
+## WORKERS
+
+    AppBundle\Service\Worker\TransactionNotificationWorker:
+      class: AppBundle\Service\Worker\TransactionNotificationWorker
+      arguments:
+        - '@app.service_telegram.telegram_client'
+        - '%telegram_group_id%'

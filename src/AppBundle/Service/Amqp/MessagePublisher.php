@@ -18,9 +18,7 @@ class MessagePublisher
     private $vHost;
     /** @var string */
     private $exchange;
-    /**
-     * @var int
-     */
+    /** @var int */
     private $port;
 
     public function __construct(string $host, int $port, string $user, string $password, string $vHost, string $exchange)
@@ -43,7 +41,10 @@ class MessagePublisher
             $this->vHost
         );
 
-        $payload = array_merge(['id' => uniqid()], $job->getData());
+        $payload = array_merge(
+            ['id' => uniqid(), 'type' => get_class($job)],
+            $job->jsonSerialize()
+        );
         $message = new AMQPMessage(
             json_encode($payload),
             [
