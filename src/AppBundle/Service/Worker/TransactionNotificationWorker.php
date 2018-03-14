@@ -12,21 +12,17 @@ class TransactionNotificationWorker extends AbstractWorker
     /** @var int */
     private $groupId;
 
-    /**
-     * TransactionListener constructor.
-     *
-     * @param Api $telegramClient
-     * @param int $groupId
-     */
     public function __construct(Api $telegramClient, int $groupId)
     {
         $this->telegramClient = $telegramClient;
-        $this->groupId = (int) $groupId;
+        $this->groupId = $groupId;
     }
 
     public function execute(AmqpWorkerJob $job)
     {
-        dump($job->getPayload());
+        dump($job);
+
+        sleep(30);
 //        $transaction = $event->getTransaction();
 //
 //        $text = [

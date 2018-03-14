@@ -2,7 +2,7 @@
 
 namespace AppBundle\Service\Amqp;
 
-use AppBundle\Service\Amqp\Model\AmqpWorkerJob;
+use AppBundle\Service\Amqp\Model\AmqpJob;
 
 class AmqpJobFactory
 {
@@ -18,26 +18,19 @@ class AmqpJobFactory
         return $message;
     }
 
-    public static function buildFromMessage(string $rawMessage): AmqpWorkerJob
+    public static function buildFromMessage(string $rawMessage): AmqpJob
     {
-        $message = self::decodeMessage($rawMessage);
+        $msg = self::decodeMessage($rawMessage);
+        $msgBody = self::decodeMessage($msg->body ?? '');
 
-        switch($message->type) {
-            case AmqpWorkerJob::class:
-                return self::buildWorkerJob($message->body, $message->properties, $message->delivery_info);
-            default :
-                throw new \InvalidArgumentException('Unknown job type encountered');
+        if ($msgBody->type ?? false && is_subclass_of($msgBody->type, AmqpJob::class)) {
+            return $msgBody->type::buildFromReceivedMessageContents(
+                $msgBody,
+                $msg->properties ?? null,
+                $msg->delivery_info ?? null
+            );
         }
-    }
 
-    private static function buildWorkerJob(string $message, array $properties=[], array $deliveryInfo=[]): AmqpWorkerJob
-    {
-        $message = self::decodeMessage($message);
-        $job = new AmqpWorkerJob($message->workerFQCN, (array) $message->payload);
-        $job->setId($message->id);
-        $job->setProperties($properties);
-        $job->setDeliveryInfo($deliveryInfo);
-
-        return $job;
+        throw new \InvalidArgumentException('Unknown job type encountered');
     }
 }

@@ -22,4 +22,18 @@ class AmqpWorkerJob extends AmqpJob
     {
         return array_merge(parent::publish(), ["workerFQCN" => $this->workerFQCN]);
     }
+
+    public static function buildFromReceivedMessageContents(
+        object $message,
+        object $properties = null,
+        object $deliveryInfo = null
+    ): AmqpJob
+    {
+        $job = new self($message->workerFQCN, (array) $message->payload);
+        $job->setId($message->id);
+        $job->setProperties($properties);
+        $job->setDeliveryInfo($deliveryInfo);
+
+        return $job;
+    }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Command;
 
 use AppBundle\Service\Amqp\AmqpJobFactory;
+use AppBundle\Service\Amqp\Model\AmqpWorkerJob;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,12 +24,14 @@ class AmqpMessageBrokerCommand extends ContainerAwareCommand
             throw new \InvalidArgumentException(sprintf('Cannot decode received encoded message: %s', $message));
         }
 
+        /** @var AmqpWorkerJob $job */
         $job = AmqpJobFactory::buildFromMessage($message);
 
         if ($input->getOption('verbose')) {
             $output->writeln(
                 sprintf(
-                    'Received from consumer: worker:%s, payload:%s',
+                    '%s Received from consumer: worker:%s, payload:%s',
+                    date('Y/m/d H:i:s', time()),
                     $job->getWorkerFQCN(),
                     json_encode($job->getPayload())
                 )

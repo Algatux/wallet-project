@@ -41,15 +41,15 @@ class MessagePublisher
             $this->vHost
         );
 
-        $payload = array_merge(
-            ['id' => uniqid(), 'type' => get_class($job)],
-            $job->publish()
-        );
+        $payload = array_merge(['id' => uniqid(), 'type' => get_class($job)], $job->publish());
         $message = new AMQPMessage(
             json_encode($payload),
             [
                 'content_type' => 'application/json',
-                'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
+                'content_encoding' => 'UTF-8',
+                'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
+                'app_id' => 'wallet',
+                'timestamp' => time()
             ]
         );
 

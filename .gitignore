@@ -1,9 +1,12 @@
 /app/config/parameters.yml
 /app/config/parameters_prod.yml
 /app/config/vendors/sentry.yml
-/bin/
+/bin/*
 !/bin/console
 !/bin/deployer
+!/bin/rabbitmq-cli-consumer
+!/bin/dev
+!/bin/prod
 /build/
 /phpunit.xml
 /var/*
@@ -28,4 +31,3 @@
 /.idea/
 /deploy_vars.php
 .DS_Store
-Docker/php-fpm/config/id_rsa

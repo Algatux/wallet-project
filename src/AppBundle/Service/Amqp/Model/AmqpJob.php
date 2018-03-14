@@ -10,16 +10,16 @@ abstract class AmqpJob
     private $id;
     /** @var array */
     private $payload;
-    /** @var array */
+    /** @var object */
     private $deliveryInfo;
-    /** @var array */
+    /** @var object */
     private $properties;
 
     public function __construct(array $payload)
     {
         $this->payload = $payload;
-        $this->deliveryInfo = [];
-        $this->properties = [];
+        $this->deliveryInfo;
+        $this->properties;
     }
 
     public function getId(): ?string
@@ -37,22 +37,22 @@ abstract class AmqpJob
         return $this->payload;
     }
 
-    public function getProperties(): array
+    public function getProperties(): ?object
     {
         return $this->properties;
     }
 
-    public function setProperties(array $properties)
+    public function setProperties(object $properties=null)
     {
         $this->properties = $properties;
     }
 
-    public function getDeliveryInfo(): array
+    public function getDeliveryInfo(): ?object
     {
         return $this->deliveryInfo;
     }
 
-    public function setDeliveryInfo(array $deliveryInfo)
+    public function setDeliveryInfo(object $deliveryInfo=null)
     {
         $this->deliveryInfo = $deliveryInfo;
     }
@@ -63,4 +63,10 @@ abstract class AmqpJob
             'payload' => $this->payload
         ];
     }
+
+    public static abstract function buildFromReceivedMessageContents(
+        object $message,
+        object $properties = null,
+        object $deliveryInfo = null
+    ): AmqpJob;
 }

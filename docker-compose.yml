@@ -11,6 +11,7 @@ services:
     depends_on:
       - mysql
       - mongo
+      - rabbit
     container_name: dev_php
   nginx:
     image: nginx:1.13
