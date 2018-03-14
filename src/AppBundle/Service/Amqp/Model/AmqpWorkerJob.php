@@ -18,11 +18,8 @@ class AmqpWorkerJob extends AmqpJob
         return $this->workerFQCN;
     }
 
-    public function jsonSerialize()
+    public function publish()
     {
-        return array_merge(
-            parent::jsonSerialize(),
-            ["workerFQCN" => $this->workerFQCN]
-        );
+        return array_merge(parent::publish(), ["workerFQCN" => $this->workerFQCN]);
     }
 }

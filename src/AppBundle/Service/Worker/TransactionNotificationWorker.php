@@ -5,7 +5,7 @@ namespace AppBundle\Service\Worker;
 use AppBundle\Service\Amqp\Model\AmqpWorkerJob;
 use Telegram\Bot\Api;
 
-class TransactionNotificationWorker
+class TransactionNotificationWorker extends AbstractWorker
 {
     /** @var Api */
     private $telegramClient;

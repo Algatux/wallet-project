@@ -19,11 +19,22 @@ class AmqpMessageBrokerCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $message = base64_decode($input->getArgument('message'));
-        $output->writeln(sprintf('Received message: %s', $message));
+        if (false === $message) {
+            throw new \InvalidArgumentException(sprintf('Cannot decode received encoded message: %s', $message));
+        }
 
         $job = AmqpJobFactory::buildFromMessage($message);
 
+        if ($input->getOption('verbose')) {
+            $output->writeln(
+                sprintf(
+                    'Received from consumer: worker:%s, payload:%s',
+                    $job->getWorkerFQCN(),
+                    json_encode($job->getPayload())
+                )
+            );
+        }
+
         $this->getContainer()->get($job->getWorkerFQCN())->execute($job);
-        exit(0);
     }
 }

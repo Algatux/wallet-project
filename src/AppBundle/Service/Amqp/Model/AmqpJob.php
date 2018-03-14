@@ -2,7 +2,7 @@
 
 namespace AppBundle\Service\Amqp\Model;
 
-abstract class AmqpJob implements \JsonSerializable
+abstract class AmqpJob
 {
     const ROUTING_KEY_DEFAULT = '';
 
@@ -10,10 +10,16 @@ abstract class AmqpJob implements \JsonSerializable
     private $id;
     /** @var array */
     private $payload;
+    /** @var array */
+    private $deliveryInfo;
+    /** @var array */
+    private $properties;
 
     public function __construct(array $payload)
     {
         $this->payload = $payload;
+        $this->deliveryInfo = [];
+        $this->properties = [];
     }
 
     public function getId(): ?string
@@ -31,7 +37,27 @@ abstract class AmqpJob implements \JsonSerializable
         return $this->payload;
     }
 
-    public function jsonSerialize()
+    public function getProperties(): array
+    {
+        return $this->properties;
+    }
+
+    public function setProperties(array $properties)
+    {
+        $this->properties = $properties;
+    }
+
+    public function getDeliveryInfo(): array
+    {
+        return $this->deliveryInfo;
+    }
+
+    public function setDeliveryInfo(array $deliveryInfo)
+    {
+        $this->deliveryInfo = $deliveryInfo;
+    }
+
+    public function publish()
     {
         return [
             'payload' => $this->payload

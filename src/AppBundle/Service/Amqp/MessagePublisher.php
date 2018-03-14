@@ -43,7 +43,7 @@ class MessagePublisher
 
         $payload = array_merge(
             ['id' => uniqid(), 'type' => get_class($job)],
-            $job->jsonSerialize()
+            $job->publish()
         );
         $message = new AMQPMessage(
             json_encode($payload),
