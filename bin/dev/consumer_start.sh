@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-COMMAND="bin/console amqp:message:broker -v"
-CONFIGURATION="app/config/vendors/amqp/consumer-dev.conf"
+BROKER_CMD="bin/console amqp:message:broker -v"
+CONSUMER_CONF="app/config/vendors/amqp/consumer-dev.conf"
 
-bin/rabbitmq-cli-consumer -i -o -V -e $COMMAND -c $CONFIGURATION
+bin/rabbitmq-cli-consumer -i -o -V -e "${BROKER_CMD}" -c "${CONSUMER_CONF}"

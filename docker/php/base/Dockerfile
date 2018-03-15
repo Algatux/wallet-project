@@ -27,7 +27,6 @@ RUN apt-get update \
         libxslt-dev \
         libzip-dev \
         curl \
-        zsh \
         git \
         bzip2 \
         nodejs \
@@ -80,9 +79,7 @@ COPY etc/php-fpm.conf /usr/local/etc/php-fpm.d/dv-project.conf
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN useradd -m -G sudo,www-data php-user \
-    && chown -R php-user:php-user /home/php-user \
-    && mkdir -p /home/php-user/mysql \
-    && mkdir -p /home/php-user/mongo
+    && chown -R php-user:php-user /home/php-user
 
 USER php-user
 
