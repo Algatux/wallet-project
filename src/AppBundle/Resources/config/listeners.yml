@@ -1,9 +1,8 @@
 services:
 
-  app.event_listener.transaction_listener:
-    class: AppBundle\Event\Listener\TransactionListener
+  AppBundle\Event\Listener\TelegramNotificationListener:
+    class: AppBundle\Event\Listener\TelegramNotificationListener
     arguments:
-      - '@app.service_telegram.telegram_client'
-      - '%telegram_group_id%'
+      - '@app.amqp.message_publisher'
     tags:
       - { name: kernel.event_listener, event: event.transaction.created, method: onTransactionCreated }

@@ -27,15 +27,10 @@ class WalletController extends BaseController
      * @param Request $request
      *
      * @return array
+     * @throws \Exception
      */
     public function listAction(Request $request)
     {
-        $this->get('app.amqp.message_publisher')->publish(new AmqpWorkerJob(
-            TransactionNotificationWorker::class,
-            ['name' => 'test']
-        ));
-        die('enqueued');
-
         /** @var WalletRepository $walletRepo */
         $walletRepo = $this->getRepository(Wallet::class);
 

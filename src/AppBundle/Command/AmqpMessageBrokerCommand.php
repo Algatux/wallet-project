@@ -4,6 +4,7 @@ namespace AppBundle\Command;
 
 use AppBundle\Service\Amqp\AmqpJobFactory;
 use AppBundle\Service\Amqp\Model\AmqpWorkerJob;
+use AppBundle\Service\Worker\AbstractWorker;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,6 +39,18 @@ class AmqpMessageBrokerCommand extends ContainerAwareCommand
             );
         }
 
-        $this->getContainer()->get($job->getWorkerFQCN())->execute($job);
+        if (!is_subclass_of($job->getWorkerFQCN(), AbstractWorker::class)) {
+            $output->writeln(
+                sprintf(
+                    '%s Received from consumer -> %s is not a valid worker',
+                    date('Y/m/d H:i:s', time()),
+                    $job->getWorkerFQCN()
+                )
+            );
+
+            return 0;
+        }
+
+        return $this->getContainer()->get($job->getWorkerFQCN())->run($job);
     }
 }

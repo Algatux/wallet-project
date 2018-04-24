@@ -1,5 +1,12 @@
 services:
+
   app.service_telegram.telegram_client:
     class: Telegram\Bot\Api
     arguments:
       - '%telegram_bot_id%'
+
+  AppBundle\Service\Telegram\TelegramNotifier:
+    class: AppBundle\Service\Telegram\TelegramNotifier
+    arguments:
+      - '@app.service_telegram.telegram_client'
+      - '%telegram_group_id%'

@@ -1,45 +1,33 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Event\Listener;
+namespace AppBundle\Service\Telegram;
 
-use AppBundle\Event\TransactionEvent;
-use Telegram\Bot\Api;
+use AppBundle\Entity\Transaction;
+use Telegram\Bot\Api as TelegramClient;
+use Telegram\Bot\Objects\Message;
 
-/**
- * Class TransactionListener.
- */
-class TransactionListener
+class TelegramNotifier
 {
-    /** @var Api */
+    /** @var TelegramClient */
     private $telegramClient;
     /** @var int */
     private $groupId;
 
-    /**
-     * TransactionListener constructor.
-     *
-     * @param Api $telegramClient
-     * @param int $groupId
-     */
-    public function __construct(Api $telegramClient, int $groupId)
+    public function __construct(TelegramClient $telegramClient, int $groupId)
     {
         $this->telegramClient = $telegramClient;
         $this->groupId = (int) $groupId;
     }
 
-    /**
-     * @param TransactionEvent $event
-     */
-    public function onTransactionCreated(TransactionEvent $event)
+    public function notifyTransactionCreated(Transaction $transaction): Message
     {
-        $transaction = $event->getTransaction();
-
         $text = [
             "*Nuova transazione*",
             "*utente*: %s",
             "*motivazione*: %s",
             "*spesa*: %.2f€",
         ];
+
         $text = sprintf(
             implode(PHP_EOL, $text),
             $transaction->getTransactedBy()->getNickName(),
@@ -52,7 +40,5 @@ class TransactionListener
             'chat_id' => $this->groupId,
             'parse_mode' => 'markdown'
         ]);
-
-
     }
 }

@@ -18,5 +18,5 @@ services:
     AppBundle\Service\Worker\TransactionNotificationWorker:
       class: AppBundle\Service\Worker\TransactionNotificationWorker
       arguments:
-        - '@app.service_telegram.telegram_client'
-        - '%telegram_group_id%'
+        - '@AppBundle\Service\Telegram\TelegramNotifier'
+        - '@doctrine.orm.entity_manager'

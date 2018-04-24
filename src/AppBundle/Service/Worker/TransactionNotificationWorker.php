@@ -2,51 +2,33 @@
 
 namespace AppBundle\Service\Worker;
 
+use AppBundle\Entity\Transaction;
 use AppBundle\Service\Amqp\Model\AmqpWorkerJob;
-use Telegram\Bot\Api;
+use AppBundle\Service\Telegram\TelegramNotifier;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TransactionNotificationWorker extends AbstractWorker
 {
-    /** @var Api */
-    private $telegramClient;
-    /** @var int */
-    private $groupId;
+    private $notifier;
+    private $entityManager;
 
-    public function __construct(Api $telegramClient, int $groupId)
+    public function __construct(TelegramNotifier $notifier, EntityManagerInterface $entityManager)
     {
-        $this->telegramClient = $telegramClient;
-        $this->groupId = $groupId;
+        $this->notifier = $notifier;
+        $this->entityManager = $entityManager;
     }
 
     public function execute(AmqpWorkerJob $job)
     {
-        dump($job);
-
-        sleep(30);
-//        $transaction = $event->getTransaction();
-//
-//        $text = [
-//            "*Nuova transazione*",
-//            "*utente*: %s",
-//            "*motivazione*: %s",
-//            "*spesa*: %.2f€",
-//        ];
-//        $text = sprintf(
-//            implode(PHP_EOL, $text),
-//            $transaction->getTransactedBy()->getNickName(),
-//            $transaction->getMotivation(),
-//            abs($transaction->getFloatAmount())
-//        );
-//
-//        $this->telegramClient->sendMessage([
-//            'text' => $text,
-//            'chat_id' => $this->groupId,
-//            'parse_mode' => 'markdown'
-//        ]);
+        $this
+            ->notifier
+            ->notifyTransactionCreated($this->retrieveSubject($job));
     }
 
-//    public function retrieveSubject()
-//    {
-//
-//    }
+    public function retrieveSubject(AmqpWorkerJob $job): Transaction
+    {
+        return $this
+            ->entityManager
+            ->find(Transaction::class, $job->getPayload()['transactionId']);
+    }
 }
