@@ -4,6 +4,7 @@ namespace AppBundle\Event\Listener;
 
 use AppBundle\Event\TransactionEvent;
 use AppBundle\Service\Amqp\MessagePublisher;
+use AppBundle\Service\Amqp\Model\AmqpJobPayload;
 use AppBundle\Service\Amqp\Model\AmqpWorkerJob;
 use AppBundle\Service\Telegram\TelegramNotifier;
 use AppBundle\Service\Worker\TransactionNotificationWorker;

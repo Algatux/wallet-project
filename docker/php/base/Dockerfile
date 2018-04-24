@@ -63,7 +63,7 @@ RUN apt-get update \
         zip \
     && CFLAGS="-I/usr/src/php" docker-php-ext-install -j5 xmlreader \
     && pecl install \
-        mongodb-1.3.0 \
+        mongodb-1.4.3 \
     && docker-php-ext-enable \
         mongodb \
     && npm install -g \
