@@ -35,7 +35,7 @@ class TelegramNotifier
             abs($transaction->getFloatAmount())
         );
 
-        $this->telegramClient->sendMessage([
+        return $this->telegramClient->sendMessage([
             'text' => $text,
             'chat_id' => $this->groupId,
             'parse_mode' => 'markdown'
