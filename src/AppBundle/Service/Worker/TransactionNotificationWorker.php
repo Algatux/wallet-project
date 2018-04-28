@@ -20,13 +20,9 @@ class TransactionNotificationWorker extends AbstractWorker
 
     public function execute(AmqpWorkerJob $job)
     {
-        dump($job);
-
-        return 0;
-
-//        $this
-//            ->notifier
-//            ->notifyTransactionCreated($this->retrieveSubject($job));
+        $this
+            ->notifier
+            ->notifyTransactionCreated($this->retrieveSubject($job));
     }
 
     public function retrieveSubject(AmqpWorkerJob $job): Transaction
