@@ -11,7 +11,7 @@ services:
         - '%rabbitmq_user%'
         - '%rabbitmq_pass%'
         - '%rabbitmq_vhost%'
-        - 'wallet'
+        - '%rabbitmq_jobs_x_name%'
 
 ## WORKERS
 
