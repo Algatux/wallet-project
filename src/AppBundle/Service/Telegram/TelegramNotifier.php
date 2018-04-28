@@ -4,7 +4,6 @@ namespace AppBundle\Service\Telegram;
 
 use AppBundle\Entity\Transaction;
 use Telegram\Bot\Api as TelegramClient;
-use Telegram\Bot\Objects\Message;
 
 class TelegramNotifier
 {
@@ -19,7 +18,7 @@ class TelegramNotifier
         $this->groupId = (int) $groupId;
     }
 
-    public function notifyTransactionCreated(Transaction $transaction): Message
+    public function notifyTransactionCreated(Transaction $transaction)
     {
         $text = [
             "*Nuova transazione*",
@@ -35,7 +34,7 @@ class TelegramNotifier
             abs($transaction->getFloatAmount())
         );
 
-        return $this->telegramClient->sendMessage([
+        $this->telegramClient->sendMessage([
             'text' => $text,
             'chat_id' => $this->groupId,
             'parse_mode' => 'markdown'
