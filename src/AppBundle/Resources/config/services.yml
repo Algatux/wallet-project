@@ -25,3 +25,7 @@ services:
     class: AppBundle\Service\Storage\TransactionStorage
     arguments:
       - '@oneup_flysystem.transactions_filesystem'
+
+  # API
+  app.service_serializer.api_serializer:
+    class: AppBundle\Service\Serializer\ApiSerializer
