@@ -1,0 +1,11 @@
+services:
+
+  api.service_serializer_handler.monthly_wallet:
+      class: ApiBundle\Service\Serializer\Handler\MonthlyWalletHandler
+      tags:
+          - { name: jms_serializer.subscribing_handler }
+
+  api.service_serializer_handler.user:
+      class: ApiBundle\Service\Serializer\Handler\UserHandler
+      tags:
+          - { name: jms_serializer.subscribing_handler }

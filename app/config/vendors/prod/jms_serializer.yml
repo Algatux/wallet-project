@@ -1,0 +1,17 @@
+jms_serializer:
+    property_naming:
+        enable_cache: true
+
+    metadata:
+        cache: file
+        debug: "%kernel.debug%"
+        file_cache:
+            dir: "%kernel.cache_dir%/serializer"
+
+    visitors:
+        json:
+            options: 0 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
+        xml:
+            doctype_whitelist:
+                - '<!DOCTYPE authorized SYSTEM "http://vault.algatux.it">' # an authorized document type for xml deserialization
+            format_output: true # suggested false in production

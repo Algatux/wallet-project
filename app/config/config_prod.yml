@@ -1,5 +1,6 @@
 imports:
     - { resource: config.yml }
+    - { resource: vendors/prod/jms_serializer.yml }
 
 parameters:
   http_protocol: https

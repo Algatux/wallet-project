@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Facile\PaginatorBundle\FacilePaginatorBundle(),
             new Facile\MongoDbBundle\FacileMongoDbBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
 
             // APP BUNDLES
             new AppBundle\AppBundle(),

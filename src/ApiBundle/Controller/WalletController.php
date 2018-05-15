@@ -5,13 +5,20 @@ namespace ApiBundle\Controller;
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Wallet;
 use AppBundle\Repository\WalletRepository;
-use AppBundle\Service\Serializer\SerializerInterface;
+use JMS\Serializer\Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class WalletController extends BaseController
 {
+    private $serializer;
+
+    public function __construct(Serializer $serializer)
+    {
+        $this->serializer = $serializer;
+    }
+
     /**
      * @Route("/wallets", name="api_wallet_list")
      * @Method("GET")
@@ -27,18 +34,6 @@ class WalletController extends BaseController
 
         $wallets = $qb->getQuery()->getResult();
 
-        return JsonResponse::create(
-            array_map(
-                function (Wallet $wallet) {
-                    return $this
-                        ->get('app.service_serializer.api_serializer')
-                        ->serialize($wallet, SerializerInterface::SERIALIZE_ALL);
-                },
-                $wallets
-            ),
-            200
-        );
-
-
+        return JsonResponse::fromJsonString($this->serializer->serialize($wallets,'json'), 200);
     }
 }
