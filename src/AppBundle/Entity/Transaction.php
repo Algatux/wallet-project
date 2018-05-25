@@ -7,6 +7,7 @@ use AppBundle\Entity\Contracts\TimeblameableInterface;
 use AppBundle\Entity\Traits\FileAwareEntity;
 use AppBundle\Entity\Traits\TimeblameableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="transaction")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TransactionRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Transaction implements TimeblameableInterface, FileAwareInterface
 {

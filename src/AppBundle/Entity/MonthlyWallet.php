@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,6 +17,8 @@ class MonthlyWallet extends Wallet
      * @ORM\Column(name="referenceMonth", type="string", length=4, nullable=false)
      * @Assert\NotNull()
      * @Assert\Length(min = 4, max = 4)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"wallet"})
      */
     private $referenceMonth;
 

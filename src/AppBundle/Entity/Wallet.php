@@ -7,6 +7,7 @@ use AppBundle\Entity\Traits\TimeblameableEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,6 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\DiscriminatorMap({
  *      "type_monthly" = "AppBundle\Entity\MonthlyWallet",
  * })
+ * @Serializer\ExclusionPolicy("all")
  */
 abstract class Wallet implements TimeblameableInterface
 {
@@ -30,6 +32,8 @@ abstract class Wallet implements TimeblameableInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"wallet","transaction"})
      */
     private $id;
 
@@ -38,6 +42,8 @@ abstract class Wallet implements TimeblameableInterface
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      * @Assert\NotNull()
+     * @Serializer\Expose()
+     * @Serializer\Groups({"wallet"})
      */
     private $name;
 
@@ -45,12 +51,16 @@ abstract class Wallet implements TimeblameableInterface
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"wallet"})
      */
     private $description;
     /**
      * @var bool
      *
      * @ORM\Column(name="settled", type="boolean", options={"default": false}, nullable=false)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"wallet"})
      */
     private $settled;
 
@@ -61,14 +71,16 @@ abstract class Wallet implements TimeblameableInterface
     private $transactions;
 
     /**
-     * var
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"wallet"})
      */
     private $owner;
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="viewableWallets", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="users_wallets")
+     * @Serializer\Groups({"wallet"})
      */
     private $sharedWith;
 
@@ -157,6 +169,26 @@ abstract class Wallet implements TimeblameableInterface
     }
 
     /**
+     * @Serializer\Expose()
+     * @Serializer\VirtualProperty()
+     * @Serializer\SerializedName("transactions")
+     * @Serializer\Groups({"wallet"})
+     *
+     * @return array
+     */
+    public function getTransactionIds(): array
+    {
+        return $this->getTransactions()->map(function(Transaction $transaction){
+            return $transaction->getId();
+        })->toArray();
+    }
+
+    /**
+     * @Serializer\Expose()
+     * @Serializer\VirtualProperty()
+     * @Serializer\SerializedName("transactionAmount")
+     * @Serializer\Groups({"wallet"})
+     *
      * @return float
      */
     public function getTransactionsTotalAmount(): float
@@ -198,6 +230,21 @@ abstract class Wallet implements TimeblameableInterface
     public function getSharedWith(): Collection
     {
         return $this->sharedWith;
+    }
+
+    /**
+     * @Serializer\Expose()
+     * @Serializer\VirtualProperty()
+     * @Serializer\SerializedName("sharedWith")
+     * @Serializer\Groups({"wallet"})
+     *
+     * @return array
+     */
+    public function getSharedWithIds():array
+    {
+        return $this->getSharedWith()->map(function(User $user){
+            return $user->getId();
+        })->toArray();
     }
 
     /**
