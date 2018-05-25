@@ -27,7 +27,8 @@ class UserHandler implements SubscribingHandlerInterface
             'id' => $user->getId(),
             'username' => $user->getUsername(),
             'email' => $user->getEmail(),
-            'name' => $user->get
+            'name' => $user->getFirstName(),
+            'surname' => $user->getLastName()
         ];
     }
 }
