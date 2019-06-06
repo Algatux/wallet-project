@@ -48,6 +48,16 @@ abstract class Wallet implements TimeblameableInterface
     private $name;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="force_name", type="boolean", nullable=false, options={"default": 0})
+     * @Assert\NotNull()
+     * @Serializer\Expose()
+     * @Serializer\Groups({"wallet"})
+     */
+    private $forceName;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
@@ -92,6 +102,7 @@ abstract class Wallet implements TimeblameableInterface
         $this->transactions = new ArrayCollection();
         $this->sharedWith = new ArrayCollection();
         $this->settled = false;
+        $this->forceName = false;
     }
 
     /**
@@ -116,6 +127,22 @@ abstract class Wallet implements TimeblameableInterface
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isForceName(): bool
+    {
+        return $this->forceName;
+    }
+
+    /**
+     * @param bool $forceName
+     */
+    public function setForceName(bool $forceName): void
+    {
+        $this->forceName = $forceName;
     }
 
     /**

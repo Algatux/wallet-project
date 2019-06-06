@@ -63,7 +63,7 @@ class AppBundleExtension extends \Twig_Extension
     public function walletInfo(Wallet $wallet): string
     {
         if ($wallet instanceof MonthlyWallet) {
-            return $wallet->getReferenceMonth('F Y');
+            return $wallet->isForceName() ? $wallet->getName() : $wallet->getReferenceMonth('F Y');
         }
 
         return $wallet->getName();

@@ -31,22 +31,30 @@ class WalletType extends AbstractType
                 'name',
                 TextType::class,
                 [
-                    "label" => "Name"
+                    'label' => 'Name'
+                ]
+            )
+            ->add(
+                'forceName',
+                CheckboxType::class,
+                [
+                    'label' => 'Force name usage',
+                    'required' => false,
                 ]
             )
             ->add(
                 'description',
                 TextType::class,
                 [
-                    "label" => "Description"
+                    'label' => 'Description'
                 ]
             )
             ->add(
                 'owner',
                 EntityType::class,
                 [
-                    "class" => User::class,
-                    "disabled" => true,
+                    'class' => User::class,
+                    'disabled' => true,
                 ]
             )
             ->add(
@@ -55,37 +63,37 @@ class WalletType extends AbstractType
                 [
                     'label' => 'saldato',
                     'required' => false,
-                    "disabled" => !$options['setSettled'],
+                    'disabled' => !$options['setSettled'],
                 ]
             )
             ->add(
-                "sharedWith",
+                'sharedWith',
                 EntityType::class,
                 [
-                    "class" => User::class,
-                    "multiple" => true,
-                    "expanded" => true,
-                    "required" => false,
-                    "by_reference" => false,
-                    "query_builder" => function (EntityRepository $repository) use ($owner)
-                    {
-                        $qb = $repository->createQueryBuilder('u');
+                    'class' => User::class,
+                    'multiple' => true,
+                    'expanded' => true,
+                    'required' => false,
+                    'by_reference' => false,
+                    'query_builder' => static function (EntityRepository $repository) use ($owner)
+                        {
+                            $qb = $repository->createQueryBuilder('u');
 
-                        if ($owner instanceof User) {
-                            $qb->andWhere('u.id != :ownerId');
-                            $qb->setParameter('ownerId', $owner->getId());
+                            if ($owner instanceof User) {
+                                $qb->andWhere('u.id != :ownerId');
+                                $qb->setParameter('ownerId', $owner->getId());
+                            }
+
+                            $qb->andWhere('u.hidden = false');
+                            $qb->orderBy('u.nickName','ASC');
+
+                            return $qb;
                         }
-
-                        $qb->andWhere('u.hidden = false');
-                        $qb->orderBy('u.nickName','ASC');
-
-                        return $qb;
-                    }
                 ]
             )
             ->add('submit', SubmitType::class);
     }
-    
+
     /**
      * {@inheritdoc}
      */
